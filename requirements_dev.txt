@@ -10,3 +10,5 @@ twine==1.14.0
 Click==7.0
 pytest==4.6.5
 pytest-runner==5.1
+Adafruit_GPIO==1.0.3
+Adafruit_MCP3008==1.0.2
