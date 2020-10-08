@@ -1,0 +1,10 @@
+{
+  "moisture_sensor":
+    {
+      "max": 500 ,
+      "min": 1
+    }
+
+
+
+}
