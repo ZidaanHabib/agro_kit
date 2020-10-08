@@ -2,7 +2,7 @@
 from time import sleep
 import Adafruit_GPIO.SPI as SPI
 import Adafruit_MCP3008
-
+import RPi.GPIO as GPIO
 #default and constant values:
 datapin = 21 # MISO pin of pi zero
 adcChannel = 7 # pin number of MCP3008  that is reading analog input
@@ -12,9 +12,15 @@ SPI_PORT = 0 # using CE0 port on pi
 SPI_DEV = 0
 MAX_READING= 1
 MIN_READING = 0
+pwr_pin = 18 # gpio pin used to power moisture sensor
+
+GPIO.setmode(GPIO.BCM) # use broadcom pin numbering
+GPIO.setup(pwr_pin, GPIO.OUT) # set pin to output mode
 
 mcp = Adafruit_MCP3008.MCP3008(spi=SPI.SpiDev(SPI_PORT, SPI_DEV))
 
+def set_pwr_pin(pin_num):
+    pwr_pin = pin_num
 
 def setDelay(delay):
     dly = delay
@@ -41,9 +47,12 @@ def calibrate_min():
 
 
 def singleRead():
+    GPIO.output(pwr_pin, GPIO.HIGH)
     val = mcp.read_adc(adcChannel)
     sleep(dly)
+    GPIO.output(pwr_pin, GPIO.LOW)
     moisture = ((val-MIN_READING)/(MAX_READING - MIN_READING))*100 #converts to percentage
+    print(moisture) # used for testing
     return moisture
 
 
