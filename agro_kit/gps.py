@@ -6,49 +6,74 @@ import pynmea2 as nmea
 class GPS:
 
     #Static Var
-    ser = serial.Serial ("/dev/ttyS0", 9600 , 1)
+    ser = serial.Serial ("/dev/ttyS0", 9600 , timeout=1)
 
 
-    def __init__(self, baud_rate, timeout = 5):
+    def __init__(self, baud_rate = 9600, timeout = 5):
         self.baud_rate = baud_rate
         self.timeout = timeout
         #ser = serial.Serial ("/dev/ttyS0", self.baud_rate, self.timeout)
-        ser.setBaudrate(baud_rate)
-        ser.setTimeout(timeout)
+        self.ser.baudrate = baud_rate
+        self.ser.timeout = timeout
 
 
     #recommended minimum position data
     def getRMC(self):
         nmea_msg = ''
-        while nmea_msg != '$GPRMC':
-            nmea_msg = ser.readline().decode()
+        while nmea_msg[0:6] != '$GPRMC':
+            nmea_msg = self.ser.readline().decode()
+            nmea_msg = nmea_msg[0:len(nmea_msg)-2] #exclude <CR><LF> when parsing
+        nmea_obj = nmea.parse(nmea_msg)
+        return nmea_obj
+
     def getVTG(self):
         nmea_msg = ''
-        while nmea_msg != '$GPVTG':
-            nmea_msg = ser.readline().decode()
+        while nmea_msg[0:6] != '$GPVTG':
+            nmea_msg = self.ser.readline().decode()
+            nmea_msg = nmea_msg[0:len(nmea_msg)-2] #exclude <CR><LF> when parsing
+        nmea_obj = nmea.parse(nmea_msg)
+        return nmea_obj
+
     def getGGA(self):
         nmea_msg = ''
-        while nmea_msg != '$GPGGA':
-            nmea_msg = ser.readline().decode()
+        while nmea_msg[0:6] != '$GPGGA':
+            nmea_msg = self.ser.readline().decode()
+            nmea_msg = nmea_msg[0:len(nmea_msg)-2] #exclude <CR><LF> when parsing
+        nmea_obj = nmea.parse(nmea_msg)
+        return nmea_obj
+
     def getGSA(self):
         nmea_msg = ''
-        while nmea_msg != '$GPGSA':
-            nmea_msg = ser.readline().decode()
+        while nmea_msg[0:6] != '$GPGSA':
+            nmea_msg = self.ser.readline().decode()
+            nmea_msg = nmea_msg[0:len(nmea_msg)-2] #exclude <CR><LF> when parsing
+        nmea_obj = nmea.parse(nmea_msg)
+        return nmea_obj
+
     def getGSV(self):
         nmea_msg = ''
-        while nmea_msg != '$GPGSV':
-            nmea_msg = ser.readline().decode()
+        while nmea_msg[0:6] != '$GPGSV':
+            nmea_msg = self.ser.readline().decode()
+            nmea_msg = nmea_msg[0:len(nmea_msg)-2] #exclude <CR><LF> when parsing
+        nmea_obj = nmea.parse(nmea_msg)
+        return nmea_obj
+
     def getGLL(self):
         nmea_msg = ''
-        while nmea_msg != '$GPGLL':
-            nmea_msg = ser.readline().decode()
+        while nmea_msg[0:6] != '$GPGLL':
+            nmea_msg = self.ser.readline().decode()
+            nmea_msg = nmea_msg[0:len(nmea_msg)-2]  #exclude <CR><LF> when parsing
+        nmea_obj = nmea.parse(nmea_msg)
+        return nmea_obj
+
+
 
 
 
 #used for testing
 if __name__ == "__main__":
-    ser = serial.Serial ("/dev/ttyS0", 9600, 5)
-    nmea_msg = ''
-    for i in range(10):
-        nmea_msg += ser.readline().decode()
-    print(nmea_msg)
+    myGPS = GPS()
+    x = myGPS.getRMC()
+    print(x.latitude + "\n")
+    y = myGPS.getGLL()
+    print(x.latitude + "\n")
