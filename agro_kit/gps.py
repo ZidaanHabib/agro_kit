@@ -31,7 +31,7 @@ class GPS:
 #set baud rate of GPS receiver:
 
 #note that only baud rates of 4800, 9600, 14400, 19200, 38400, 57600, 115200 are allowed
-    def setGPSBaudRate(self, baud_rate):
+    def setGPSBaudRate(self, baud_rate): #NOTE: STILL IN DEVELOPMENT - DO NOT USE
         if baud_rate in GPS.BAUD_RATES:
             str_baud_rate = str(baud_rate)
             cmd = '$PQBAUD,W,' + str_baud_rate + '*' + GPS.BAUD_RATE_CHKSUMS[str_baud_rate] + "\r\n"
@@ -41,7 +41,7 @@ class GPS:
         else:
             print("Error - invalid baud rate. Can only choose from 4800, 9600, 14400, 19200, 38400, 57600, 115200.")
 
-    def enableURC(self, mode, save):
+    def enableURC(self, mode, save): #NOTE: STILL IN DEVELOPMENT - DO NOT USE
         arg1, arg2, = '0','0'
         if mode:
             arg1 = 1
@@ -107,6 +107,13 @@ class GPS:
         nmea_obj = nmea.parse(nmea_msg)
         return nmea_obj
 
+    def continuousRead(self): #continously print raw data to terminal
+        try:
+            while True:
+                print(self.ser.readline().decode())
+        except KeyboardInterrupt:
+            pass
+
 #######################################################################################3
 #Methods for the Distance Matrix API:
 #######################################################################################3
@@ -146,6 +153,4 @@ if __name__ == "__main__":
         f.close()
     GPS.setAPIKey(API_KEY)
     dst_lat, dst_long = -26.146446, 28.041632
-    #myGPS.setGPSBaudRate(9600)
-    #print(myGPS.getGLL().latitude)
     myGPS.ser.write('$PMTK103*30\r'.encode())
