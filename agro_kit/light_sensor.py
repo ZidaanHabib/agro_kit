@@ -74,15 +74,15 @@ class light_sensor:
         return lux 
 
     # Function to read colour # Could be used for plant health? Green/Brown
-    def colour(self):
-        powerUp(self)
+    def colour(self,pwr_pin):
+        self.powerUp(pwr_pin)
         colour = self.light_sensor_config.color_temperature
         print("Temperature: {0}K".format(temp))
-        return lux 
+        return colour
 
     # Function to read individual colours
-    def RGB(self):
-        powerUp()
+    def RGB(self,pwr_pin):
+        self.powerUp(pwr_pin)
         print('Color: (Red {0}, Green {1}, Blue {2})'.format(*self.light_sensor_config.color_rgb_bytes))
 
     # Set Sample Rate
@@ -90,13 +90,13 @@ class light_sensor:
         sample_rate = Rate
 
     # Calibrate light sensor for daylight
-    def sunlight(self):
-        powerUp()
+    def sunlight(self,pwr_pin):
+        self.powerUp(pwr_pin)
         sunset = self.light_sensor_config.lux
 
     # Calibrate light sensor for dark
-    def sunset(self):
-        powerUp()
+    def sunset(self,pwr_pin):
+        self.powerUp(pwr_pin)
         sunset = self.light_sensor_config.lux
 
     #colour()
@@ -108,7 +108,11 @@ class light_sensor:
 
 light_sensor_test = light_sensor(17, 17)
 light_sensor_test.readColourLux(17)
-light_sensor_test.loopRead(17)
+light_sensor_test.RGB(17)
+light_sensor_test.colour(17)
+light_sensor_test.readColourLux(17)
+light_sensor_test.powerDown(17) # remove power from sensor
+#light_sensor_test.loopRead(17)
 
 
 

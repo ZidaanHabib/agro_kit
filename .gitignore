@@ -103,3 +103,9 @@ ENV/
 
 # IDE settings
 .vscode/
+
+# Google Maps API key
+.gmaps_key
+
+# Google Maps API key1
+.gmaps_key.gmaps_key
