@@ -12,19 +12,19 @@ class GPS:
 
 
     #Static Var
-    ser = serial.Serial ("/dev/ttyS0", 9600 , timeout=1)
+    #ser = serial.Serial ("/dev/ttyS0", 9600 , timeout=1)
     API_KEY = '' # empty by default
 
 
     def __init__(self, baud_rate = 9600, timeout = 5):
         self.baud_rate = baud_rate
         self.timeout = timeout
-        #ser = serial.Serial ("/dev/ttyS0", self.baud_rate, self.timeout)
+        self.ser = serial.Serial ("/dev/ttyS0", self.baud_rate, self.timeout)
         self.ser.baudrate = baud_rate
         self.ser.timeout = timeout
 
 
-#######################################################################################3
+#######################################################################################3ss
 #Configuration methods
 #######################################################################################3
 
@@ -34,10 +34,26 @@ class GPS:
     def setGPSBaudRate(self, baud_rate):
         if baud_rate in GPS.BAUD_RATES:
             str_baud_rate = str(baud_rate)
-            msg = '$PQBAUD,W,' + str_baud_rate + '*' + GPS.BAUD_RATE_CHKSUMS[str_baud_rate] + '\n'
-            ser.write(msg.encode())
-            print(ser.readline().decode())
+            cmd = '$PQBAUD,W,' + str_baud_rate + '*' + GPS.BAUD_RATE_CHKSUMS[str_baud_rate] + "\r\n"
+            self.ser.write(cmd.encode())
+            #response = self.ser.readline().decode()
+            #print(response)
+        else:
+            print("Error - invalid baud rate. Can only choose from 4800, 9600, 14400, 19200, 38400, 57600, 115200.")
 
+    def enableURC(self, mode, save):
+        arg1, arg2, = '0','0'
+        if mode:
+            arg1 = 1
+        if save:
+            arg2 = 1
+        cmd = "$PQEPE,W," + str(mode) + ',' + str(save)
+        chksm = ord(cmd[1])
+        for i in range(2,len(cmd)):
+            chksm ^= ord(cmd[i])
+        self.ser.write("$PQEPE,W,0,0*2A\r\n".encode())
+        #response = self.ser.readline().decode()
+        #print(response)
 
 #########################################################################
 #Methods to get different NMEA message types from GPS module:
@@ -112,15 +128,13 @@ class GPS:
     @classmethod
     def distanceFromTo(cls, origin_lat, origin_long, dst_lat, dst_long):
         #if origin_lat.isNumeric() and origin_lat.isNumeric() and isNumeric(dst_lat) and isNumeric(dst_long):
-            url1 = 'https://maps.googleapis.com/maps/api/distancematrix/json?'
-            url2 = 'origins='+str(origin_lat) + ',' + str(origin_long)
-            url3 = '&destinations=' +str(dst_lat) + ',' + str(dst_long)
-            url4 = "&mode=car&key=" + API_KEY
-            url = url1 + url2 + url3 + url4
-            output = requests.get(url).json() #sending get request to google maps Distance MatriX API
-            return output["rows"][0]["elements"][0]["distance"]["value"]
-
-
+        url1 = 'https://maps.googleapis.com/maps/api/distancematrix/json?'
+        url2 = 'origins='+str(origin_lat) + ',' + str(origin_long)
+        url3 = '&destinations=' +str(dst_lat) + ',' + str(dst_long)
+        url4 = "&mode=car&key=" + API_KEY
+        url = url1 + url2 + url3 + url4
+        output = requests.get(url).json() #sending get request to google maps Distance MatriX API
+        return output["rows"][0]["elements"][0]["distance"]["value"]
 
 
 
@@ -132,4 +146,6 @@ if __name__ == "__main__":
         f.close()
     GPS.setAPIKey(API_KEY)
     dst_lat, dst_long = -26.146446, 28.041632
-    myGPS.setGPSBaudRate(4800)
+    #myGPS.setGPSBaudRate(9600)
+    #print(myGPS.getGLL().latitude)
+    myGPS.ser.write('$PMTK103*30\r'.encode())
