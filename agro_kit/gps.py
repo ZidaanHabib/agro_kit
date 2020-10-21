@@ -3,8 +3,9 @@ import serial
 from time import sleep
 import pynmea2 as nmea
 import requests
+import sys
 
-class GPS:
+class GPS():
 
     BAUD_RATES = [4800, 9600, 14400, 19200, 38400, 57600, 115200]
     BAUD_RATE_CHKSUMS = {'4800': "48", '9600': '4B', '14400': '75', '19200': '7E', '38400': '7B', '57600': '70', '115200': '43'}
@@ -108,11 +109,12 @@ class GPS:
         return nmea_obj
 
     def continuousRead(self): #continously print raw data to terminal
-        try:
-            while True:
-                print(self.ser.readline().decode())
-        except KeyboardInterrupt:
-            pass
+        while True:
+            try:
+                print(self.ser.read())
+                sleep(0.1)
+            except KeyboardInterrupt:
+                break
 
 #######################################################################################3
 #Methods for the Distance Matrix API:
