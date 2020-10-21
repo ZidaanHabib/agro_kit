@@ -130,7 +130,7 @@ class GPS():
     #set Google API key:
     @classmethod
     def setAPIKey(cls, key):
-        API_KEY = key
+        GPS.API_KEY = key
 
 
     #Calculate distance from specified coords to destination coords in meters:
@@ -140,7 +140,7 @@ class GPS():
         url1 = 'https://maps.googleapis.com/maps/api/distancematrix/json?'
         url2 = 'origins='+str(origin_lat) + ',' + str(origin_long)
         url3 = '&destinations=' +str(dst_lat) + ',' + str(dst_long)
-        url4 = "&mode=car&key=" + API_KEY
+        url4 = "&mode=car&key=" + GPS.API_KEY
         url = url1 + url2 + url3 + url4
         output = requests.get(url).json() #sending get request to google maps Distance MatriX API
         return output["rows"][0]["elements"][0]["distance"]["value"]

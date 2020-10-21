@@ -78,11 +78,7 @@ class light_sensor:
         self.powerUp(pwr_pin)
         colour = self.light_sensor_config.color_temperature
         print("Temperature: {0}K".format(temp))
-<<<<<<< HEAD
         return colour
-=======
-        return lux
->>>>>>> gps_z
 
     # Function to read individual colours
     def RGB(self,pwr_pin):
@@ -112,15 +108,8 @@ class light_sensor:
 
 light_sensor_test = light_sensor(17, 17)
 light_sensor_test.readColourLux(17)
-<<<<<<< HEAD
 light_sensor_test.RGB(17)
 light_sensor_test.colour(17)
 light_sensor_test.readColourLux(17)
 light_sensor_test.powerDown(17) # remove power from sensor
 #light_sensor_test.loopRead(17)
-
-
-
-=======
-light_sensor_test.loopRead(17)
->>>>>>> gps_z

@@ -21,4 +21,4 @@ with open("../.gmaps_key", "r") as f:
     f.close()
 gps.GPS.setAPIKey(API_KEY) # sets our API key that will be used for some of the google maps functions
 dst_lat, dst_log = -34.029023, 18.444479 # location of the Constantia Emporium
-print("Distance is " + myGPS.distanceTo(-34.029023, 18.444479))
+print("Distance is " + myGPS.distanceTo(-34.029023, 18.444479) + "m to the Constantia Emporium")
