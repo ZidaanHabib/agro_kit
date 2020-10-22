@@ -1,6 +1,7 @@
 import json
 import serial
 from time import sleep
+from time import time
 import pynmea2 as nmea
 import requests
 import sys
@@ -37,8 +38,11 @@ class GPS():
             str_baud_rate = str(baud_rate)
             cmd = '$PQBAUD,W,' + str_baud_rate + '*' + GPS.BAUD_RATE_CHKSUMS[str_baud_rate] + "\r\n"
             self.ser.write(cmd.encode())
-            #response = self.ser.readline().decode()
-            #print(response)
+            sleep(0.1)
+            self.ser.baudate = baud_rate # set /dev/ttyS0 baudrate as well
+            sleep(1.2)
+            response = self.ser.readline().decode()
+            print(response)
         else:
             print("Error - invalid baud rate. Can only choose from 4800, 9600, 14400, 19200, 38400, 57600, 115200.")
 
@@ -56,6 +60,17 @@ class GPS():
         #response = self.ser.readline().decode()
         #print(response)
 
+    def coldstart(self):
+        self.ser.write("$PMTK103*30\r\n".encode())
+
+    def fullColdStart(self):
+        self.ser.write("$PMTK104*37\r\n".encode())
+
+    def warmStart(self):
+        self.ser.write("$PMTK102*31\r\n".encode())
+
+    def hotStart(self):
+        self.ser.write("$PMTK101*32\r\n".encode())
 #########################################################################
 #Methods to get different NMEA message types from GPS module:
 
@@ -116,6 +131,21 @@ class GPS():
             except KeyboardInterrupt:
                 break
 
+    def getPQEPE(self):
+        nmea_msg = ''
+        while nmea_msg[0:6] != '$PQEPE':
+            nmea_msg = self.ser.readline().decode()
+            nmea_msg = nmea_msg[0:len(nmea_msg)-2]  #exclude <CR><LF> when parsing
+        #nmea_obj = nmea.parse(nmea_msg)
+        print(nmea_msg)
+
+    def getNumSats(self):
+        nmea_obj = self.getGGA()
+        num_sats = nmea_msg.num_sats
+        print(num_sats)
+        return num_sats
+
+
 #######################################################################################3
 #Methods for the Distance Matrix API:
 #######################################################################################3
@@ -125,7 +155,7 @@ class GPS():
         data = self.getGLL()
         origin_lat = data.latitude
         origin_long = data.longitude
-        return GPS.distanceFromTo(origin_lat, origin_long, dst_lat, dst_long)
+        return GPS.distanceFromTo(origin_lat, origin_long, dst_lat, dsst_long)
 
     #set Google API key:
     @classmethod
@@ -155,4 +185,7 @@ if __name__ == "__main__":
         f.close()
     GPS.setAPIKey(API_KEY)
     dst_lat, dst_long = -26.146446, 28.041632
-    myGPS.ser.write('$PMTK103*30\r'.encode())
+    #print(myGPS.getRMC())
+    #myGPS.ser.write(b"$PMTK101*32\r\n")
+    myGPS.ser.write(b"$PMTK101*32\r\n")
+    print(myGPS.getGGA().num_sats)
