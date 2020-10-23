@@ -29,11 +29,15 @@ class MoistureSensor:
         #self.MIN_READING = 0
         GPIO.setmode(GPIO.BCM) # use broadcom pin numbering
         GPIO.setup(self.pwr_pin, GPIO.OUT) # set pin to output mode
-
-        with open('config.json') as f:
-            self.data = json.load(f)
-            self.MAX_READING = self.data["moisture_sensor"]["max"]
-            self.MIN_READING = self.data["moisture_sensor"]["min"]
+        #retrieve saved  min and max settings from configuration file:
+        with open('config.json', 'r') as f:
+            try:
+                data = json.load(f) #try remove self
+                self.MAX_READING = data["moisture_sensor"]["max"]
+                self.MIN_READING = data["moisture_sensor"]["min"]
+            except:
+                pass
+            f.close()
 
         self.mcp = Adafruit_MCP3008.MCP3008(spi=SPI.SpiDev(self.SPI_PORT, self.SPI_DEV))
 
@@ -63,7 +67,7 @@ class MoistureSensor:
             #data = json.load(f)
             self.data["moisture_sensor"]["max"] = int(max)
             json.dump(self.data,f)
-
+            f.close()
     #user must submerge sensor in water
     def calibrate_min(self):
         #self.MIN_READING = mcp.read_adc(self.adcChannel)
@@ -73,7 +77,7 @@ class MoistureSensor:
             #data = json.load(f)
             self.data["moisture_sensor"]["min"] = int(min)
             json.dump(self.data,f)
-
+            f.close()
 
 
     def singleRead(self):
@@ -84,8 +88,24 @@ class MoistureSensor:
         moisture = ((val-self.MIN_READING)/(self.MAX_READING - self.MIN_READING))*100 #converts to percentage
         return moisture
 
-#testing:
-moisture_sensor = MoistureSensor(21, 0, 7, 18)
-moisture_sensor.calibrate_min()
-reading = moisture_sensor.singleRead()
-print(reading) # used for testing
+    @classmethod
+    def createRange(cls, min, max, profile_name):
+        new_entry = {profile_name: [min, max]}
+        with open('config.json') as f:
+            data = json.load(f)
+            temp = data["moisture_sensor"]["ranges"]
+            f.seek(0)
+            temp.update(new_entry)
+        with open('config.json', 'w') as h:
+            try:
+                json.dump(data,h, indent=4)
+            except:
+                print("Something went wrong")
+
+if __name__ == "__main__":
+    #testing:
+    moisture_sensor = MoistureSensor(21, 0, 7, 18)
+    #moisture_sensor.calibrate_min()
+    reading = moisture_sensor.singleRead()
+    print(reading) # used for testing
+    #MoistureSensor.createRange(10, 20, 'test')
