@@ -50,22 +50,23 @@ class light_sensor:
             time.sleep(sample_rate)
             self.powerDown(pwr_pin)
             time.sleep(sample_rate)
-        return temp + lux 
-
-
-    def singleRead(self, pwr_pin):
-        
       
-        self.readColourLux(pwr_pin)
-       
 
-    # Function to read colour and luminosity
-    def readColourLux(self, pwr_pin):
+
+    def singleReadLux(self, pwr_pin):
         self.powerUp(pwr_pin)
-        temp = self.light_sensor_config.color_temperature
         lux = self.light_sensor_config.lux
-        print("Colour Temperature: {0}K Lux: {1}".format(temp, lux))
-        return temp + lux 
+        self.powerDown(pwr_pin)
+        #print(lux)
+        return lux
+
+    def singleReadColour(self, pwr_pin):
+        self.powerUp(pwr_pin)
+        colour = self.light_sensor_config.color_temperature
+        self.powerDown(pwr_pin)
+        #print(colour)
+        return colour  
+
 
     # Function to read luminosity
     def lux(self,pwr_pin):
@@ -75,12 +76,13 @@ class light_sensor:
         print("Lux: {1}".format(temp, lux))
         return lux 
 
-    # Function to read colour # Could be used for plant health? Green/Brown
+    # Function to read colour 
     def colour(self,pwr_pin):
         self.powerUp(pwr_pin)
-        colour = self.light_sensor_config.color_temperature
-        print("Colour Temperature: {0}K".format(temp))
-        return colour
+        time.sleep(0.5)
+        colour_temp = self.light_sensor_config.color_temperature
+        print("Colour Temperature: {0}K".format(colour_temp))
+        return colour_temp
 
     # Function to read individual colours
     def RGB(self,pwr_pin):
@@ -105,11 +107,12 @@ class light_sensor:
     
 if __name__ == "__main__":
     light_sensor_test = light_sensor(17, 17)
-    #light_sensor_test.readColourLux(17)
-    #light_sensor_test.RGB(17)
-    #light_sensor_test.colour(17)
-    #light_sensor_test.readColourLux(17)
-    light_sensor_test.singleRead(17)
+    
+    light_sensor_test.RGB(17)
+    light_sensor_test.lux(17)
+    light_sensor_test.powerUp(17)
+    light_sensor_test.colour(17)
+    light_sensor_test.singleReadColour(17)
     light_sensor_test.powerDown(17)
 
 
