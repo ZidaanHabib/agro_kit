@@ -52,6 +52,13 @@ class light_sensor:
             time.sleep(sample_rate)
         return temp + lux 
 
+
+    def singleRead(self, pwr_pin):
+        
+      
+        self.readColourLux(pwr_pin)
+       
+
     # Function to read colour and luminosity
     def readColourLux(self, pwr_pin):
         self.powerUp(pwr_pin)
@@ -95,16 +102,14 @@ class light_sensor:
         sunset = self.light_sensor_config.lux
 
 #  For testing
-    #readColourLux()
-    #RGB()
-    #GPIO.output(17, 0) # remove power from sensor
-
-light_sensor_test = light_sensor(17, 17)
-light_sensor_test.readColourLux(17)
-light_sensor_test.RGB(17)
-#light_sensor_test.colour(17)
-#light_sensor_test.readColourLux(17)
-#light_sensor_test.loopRead(17)
-light_sensor_test.powerDown(17)
+    
+if __name__ == "__main__":
+    light_sensor_test = light_sensor(17, 17)
+    #light_sensor_test.readColourLux(17)
+    #light_sensor_test.RGB(17)
+    #light_sensor_test.colour(17)
+    #light_sensor_test.readColourLux(17)
+    light_sensor_test.singleRead(17)
+    light_sensor_test.powerDown(17)
 
 
