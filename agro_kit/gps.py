@@ -187,5 +187,4 @@ if __name__ == "__main__":
     dst_lat, dst_long = -26.146446, 28.041632
     #print(myGPS.getRMC())
     #myGPS.ser.write(b"$PMTK101*32\r\n")
-    myGPS.ser.write(b"$PMTK101*32\r\n")
-    print(myGPS.getGGA().num_sats)
+    print(myGPS.getGGA().timestamp)

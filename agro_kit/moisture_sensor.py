@@ -27,8 +27,10 @@ class MoistureSensor:
         self.dly = 0.1
         #self.MAX_READING = 1
         #self.MIN_READING = 0
+        GPIO.setwarnings(False)  
         GPIO.setmode(GPIO.BCM) # use broadcom pin numbering
         GPIO.setup(self.pwr_pin, GPIO.OUT) # set pin to output mode
+
         #retrieve saved  min and max settings from configuration file:
         with open('config.json', 'r') as f:
             try:
@@ -59,25 +61,34 @@ class MoistureSensor:
 
 
     #user must submerge sensor in water
-    def calibate_max(self):
+    def calibrate_max(self):
         #self.MAX_READING = mcp.read_adc(self.adcChannel)
         max = self.mcp.read_adc(self.adcChannel)
         self.MAX_READING = int(max)
-        with open('config.json', "w") as f:
-            #data = json.load(f)
-            self.data["moisture_sensor"]["max"] = int(max)
-            json.dump(self.data,f)
-            f.close()
+        with open('config.json') as f:
+            data = json.load(f)
+            data["moisture_sensor"]["max"] = int(max)
+        with open('config.json', 'w') as h:
+            try:
+                json.dump(data,h)
+            except:
+                print("Something went wrong")
+        f.close()
     #user must submerge sensor in water
     def calibrate_min(self):
         #self.MIN_READING = mcp.read_adc(self.adcChannel)
         min = self.mcp.read_adc(self.adcChannel)
         self.MIN_READING = int(min)
-        with open('config.json', "w") as f:
-            #data = json.load(f)
-            self.data["moisture_sensor"]["min"] = int(min)
-            json.dump(self.data,f)
+        with open('config.json') as f:
+            data = json.load(f)
+            data["moisture_sensor"]["min"] = int(min)
             f.close()
+        with open('config.json', 'w') as h:
+            try:
+                json.dump(data,h, indent==2)
+            except:
+                print("Something went wrong")
+        f.close()
 
 
     def singleRead(self):
