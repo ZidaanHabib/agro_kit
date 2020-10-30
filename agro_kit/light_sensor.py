@@ -8,8 +8,11 @@ import adafruit_tcs34725
 import RPi.GPIO as GPIO
 import json
 
+# default values:
 temp=  0
 sample_rate= 0
+pwr_pin = 17
+
 class light_sensor:
 
     def __init__(self, datapin, pwr_pin  ):
@@ -25,6 +28,11 @@ class light_sensor:
 
         self.light_sensor_config = adafruit_tcs34725.TCS34725(i2cbus)
         self.powerDown(pwr_pin)
+
+
+    def set_pwr_pin(self,pin_num):
+        self.pwr_pin = pin_num
+
 
     def powerUp(self, pwr_pin):
          # GPIO PIN  to power sensor
@@ -54,14 +62,14 @@ class light_sensor:
 
 
 
-    def singleReadLux(self, pwr_pin):
+    def singleReadLux(self):
         self.powerUp(pwr_pin)
         lux = self.light_sensor_config.lux
         self.powerDown(pwr_pin)
         #print(lux)
         return lux
 
-    def singleReadColour(self, pwr_pin):
+    def singleReadColour(self):
         self.powerUp(pwr_pin)
         colour = self.light_sensor_config.color_temperature
         self.powerDown(pwr_pin)
@@ -108,12 +116,11 @@ class light_sensor:
 
 if __name__ == "__main__":
     light_sensor_test = light_sensor(17, 17)
+    light_sensor_test.singleReadLux()
 
-    '''light_sensor_test.RGB(17)
+    #'''light_sensor_test.RGB(17)
     light_sensor_test.lux(17)
-    light_sensor_test.powerUp(17)
+    #light_sensor_test.powerUp(17)
     light_sensor_test.colour(17)
-    light_sensor_test.singleReadColour(17)
-    light_sensor_test.powerDown(17)'''
-
-    print(light_sensor_test.singleReadLux(17))
+    #light_sensor_test.singleReadColour(17)
+    light_sensor_test.powerDown(17)
