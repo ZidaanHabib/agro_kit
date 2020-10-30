@@ -24,6 +24,7 @@ class light_sensor:
         self.sample_rate = 5
 
         self.light_sensor_config = adafruit_tcs34725.TCS34725(i2cbus)
+        self.powerDown(pwr_pin)
 
     def powerUp(self, pwr_pin):
          # GPIO PIN  to power sensor

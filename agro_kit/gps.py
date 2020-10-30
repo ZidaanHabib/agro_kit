@@ -10,8 +10,8 @@ class GPS():
 
     BAUD_RATES = [4800, 9600, 14400, 19200, 38400, 57600, 115200]
     BAUD_RATE_CHKSUMS = {'4800': "48", '9600': '4B', '14400': '75', '19200': '7E', '38400': '7B', '57600': '70', '115200': '43'}
-
-
+    PQEPE_CHKSUMS = {'0,0': '2A', '0,1': '2B', '1,0': "2B", '1,1': '2A' }
+    PQFLP_CHKSUMS = {'0,0': '20', '0,1': '21', '1,0': '21', '1,1': '20'}
 
     #Static Var
     #ser = serial.Serial ("/dev/ttyS0", 9600 , timeout=1)
@@ -47,18 +47,27 @@ class GPS():
             print("Error - invalid baud rate. Can only choose from 4800, 9600, 14400, 19200, 38400, 57600, 115200.")
 
     def enableURC(self, mode, save): #NOTE: STILL IN DEVELOPMENT - DO NOT USE
-        arg1, arg2, = '0','0'
+        str_mode, str_save, = '0','0' #declaring vars
         if mode:
-            arg1 = 1
+            str_mode = "1"
         if save:
-            arg2 = 1
-        cmd = "$PQEPE,W," + str(mode) + ',' + str(save)
-        chksm = ord(cmd[1])
-        for i in range(2,len(cmd)):
-            chksm ^= ord(cmd[i])
-        self.ser.write("$PQEPE,W,0,0*2A\r\n".encode())
-        #response = self.ser.readline().decode()
+            str_save = '1'
+        arg = str_mode + "," + str_save
+        cmd = "$PQEPE,W," + arg + "*" + GPS.PQEPE_CHKSUMS[arg] + "\r\n"
+        self.ser.write(cmd.encode())
+        #response = self.getPQEPE()
         #print(response)
+
+
+    def enableFLP(self,mode, save ):
+        str_mode, str_save, = '0','0' #declaring vars
+        if mode:
+            str_mode = "1"
+        if save:
+            str_save = '1'
+        arg = str_mode + "," + str_save
+        cmd = "$PQFLP,W," + arg + "*" + GPS.PQFLP_CHKSUMS[arg] + "\r\n"
+        self.ser.write(cmd.encode())
 
     def coldstart(self):
         self.ser.write("$PMTK103*30\r\n".encode())
@@ -126,7 +135,7 @@ class GPS():
     def continuousRead(self): #continously print raw data to terminal
         while True:
             try:
-                print(self.ser.read())
+                print(self.ser.readline().decode())
                 sleep(0.1)
             except KeyboardInterrupt:
                 break
@@ -199,4 +208,5 @@ if __name__ == "__main__":
     #print(myGPS.getRMC())
     #myGPS.ser.write(b"$PMTK101*32\r\n")
     #print(myGPS.getLongLat())
-    print(myGPS.getGLL())
+    myGPS.ser.write("$PQFLP,R*25\r\n".encode())
+    myGPS.continuousRead()

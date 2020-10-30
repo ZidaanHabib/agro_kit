@@ -27,15 +27,15 @@ class AgroKit:
 
     def read(self):
         #loc = self.GPS.getLongLat()
-        loc = getLongLat(self.GPS.getGLL())
+        loc = self.GPS.getLongLat(self.GPS.getGLL())
         RMC_msg = self.GPS.getRMC()
         GGA_msg = self.GPS.getGGA()
         alt = GGA_msg.altitude
         dt = RMC_msg.datetime #time stamp
         str_datetime = dt.strftime("%Y-%m-%d %H:%M:%S")
         moisture = round(self.MS.singleRead()) #moisture level as a percentage
-        lux = round(self.LS.singleReadLux(17))
-        output = str_datetime + "\tMoisture: " + str(moisture) + "\tLocation:" + loc + "\tAltitude: " + str(alt) +"%\n"
+        lux = self.LS.singleReadLux(17)
+        output = str_datetime + "\tMoisture: " + str(moisture) + "\tLux: " + str(lux) + "\tLocation:" + loc + "\tAltitude: " + str(alt) +"%\n"
         reading = Reading(moisture,lux, RMC_msg)
         print(output)
         return reading
@@ -53,6 +53,14 @@ class AgroKit:
                 self.MIN_LUX = profile[name]["lux"][0]
             except Exception as e:
                 print(e)
+
+    def readingOK(self, reading):
+        ok = True
+        if reading.moisture < self.MIN_MOISTURE or reading.moisture > self.MAX_MOISTURE or reading.lux < self.MIN_LUX or reading.lux > self.MAX_LUX:
+            ok = False
+
+        return ok
+
 
     def logData(self, rmc, gga, gll, moist, lux):
         dt = rmc.datetime #time stamp
@@ -72,7 +80,7 @@ class AgroKit:
                 f.write(string)
                 f.close()
 
-    def last24Hrs(self):
+    def last24Hrs(self, filename):
         try:
             now = datetime.utcnow()
             with FileReadBackwards('log.txt', encoding="utf-8") as f:
@@ -123,4 +131,4 @@ def createProfile(name, minMoisture, maxMoisture, minLux, maxLux):
 myAG = AgroKit()
 myAG.loadProfile("test")
 #myAG.logData(myAG.GPS.getRMC(), myAG.GPS.getGGA(), myAG.GPS.getGLL(), myAG.MS.singleRead(), myAG.LS.singleReadLux(17))
-myAG.last24Hrs()
+print(myAG.read())
