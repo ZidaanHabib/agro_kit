@@ -4,7 +4,9 @@ import json
 from moisture_sensor import MoistureSensor
 from gps import GPS
 from light_sensor import light_sensor
-
+import os
+from datetime import datetime
+from file_read_backwards import FileReadBackwards
 ###########################################################################3#
 '''AgroKit class to interface with hardware'''
 ###############################################################################
@@ -24,19 +26,22 @@ class AgroKit:
 
 
     def read(self):
-        gps_msg = self.GPS.getRMC()
-        dt = gps_msg.datetime #time stamp
+        #loc = self.GPS.getLongLat()
+        loc = getLongLat(self.GPS.getGLL())
+        RMC_msg = self.GPS.getRMC()
+        GGA_msg = self.GPS.getGGA()
+        alt = GGA_msg.altitude
+        dt = RMC_msg.datetime #time stamp
         str_datetime = dt.strftime("%Y-%m-%d %H:%M:%S")
         moisture = round(self.MS.singleRead()) #moisture level as a percentage
-        #lum =
-        output = str_datetime + " Moisture: " + str(moisture) + "%\n"
-        reading = Reading(moisture,0, gps_msg)
+        lux = round(self.LS.singleReadLux(17))
+        output = str_datetime + "\tMoisture: " + str(moisture) + "\tLocation:" + loc + "\tAltitude: " + str(alt) +"%\n"
+        reading = Reading(moisture,lux, RMC_msg)
         print(output)
         return reading
 
 
-    def readingOK(self,reading):
-
+    #def readingOK(self,reading):
 
     def loadProfile(self,name):
         with open("profiles.json", 'r') as f:
@@ -49,10 +54,45 @@ class AgroKit:
             except Exception as e:
                 print(e)
 
+    def logData(self, rmc, gga, gll, moist, lux):
+        dt = rmc.datetime #time stamp
+        time = dt.strftime("%Y-%m-%d %H:%M:%S")
+        alt = gga.altitude
+        loc = self.GPS.getLongLat(gll)
+        string = time + "\t" + str(moist) + "\t" + str(lux) + "\t" + str(alt) + "\t\t" + loc + '\n'
+        print(string)
+
+        if os.path.exists('log.txt'):
+            with open('log.txt', 'a') as f:
+                f.write(string)
+                f.close()
+        else:
+            with open('log.txt', 'a') as f:
+                f.write("Time\t\t\tMoisture\t\tLux\t\t\tAltitude\t\tLocation\n")
+                f.write(string)
+                f.close()
+
+    def last24Hrs(self):
+        try:
+            now = datetime.utcnow()
+            with FileReadBackwards('log.txt', encoding="utf-8") as f:
+                for line in f:
+                    try:
+                        date = datetime.strptime(line[0:19], "%Y-%m-%d %H:%M:%S")
+                    except:
+                        break #if can't then we've reached the top line so break
+                    if (now - date).days == 0: #within 24 hours
+                        print("bingo")
+                    else:
+                        break
+        except Exception as e:
+            print(e)
+
+#############################################################################
+'''class for agro_kit reading:'''
 #############################################################################
 
-#class for agro_kit reading:
-class Reading(self):
+class Reading:
 
     def __init__(self, moisture, lux, gps):
         self.moisture = moisture
@@ -82,4 +122,5 @@ def createProfile(name, minMoisture, maxMoisture, minLux, maxLux):
 
 myAG = AgroKit()
 myAG.loadProfile("test")
-myAG.read()
+#myAG.logData(myAG.GPS.getRMC(), myAG.GPS.getGGA(), myAG.GPS.getGLL(), myAG.MS.singleRead(), myAG.LS.singleReadLux(17))
+myAG.last24Hrs()

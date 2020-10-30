@@ -145,6 +145,17 @@ class GPS():
         print(num_sats)
         return num_sats
 
+    def getLongLat(self, gll):
+        #nmea_obj = self.getGLL()
+        nmea_obj = gll
+        res = str(nmea_obj.latitude) + ',' + nmea_obj.lat_dir + ','+ str(nmea_obj.longitude) + "," + nmea_obj.lon_dir
+        return res
+
+    def getAltitude(self):
+        nmea_obj = self.getGGA()
+        alt = nmea_obj.altitude
+        return alt
+
 
 #######################################################################################3
 #Methods for the Distance Matrix API:
@@ -155,7 +166,7 @@ class GPS():
         data = self.getGLL()
         origin_lat = data.latitude
         origin_long = data.longitude
-        return GPS.distanceFromTo(origin_lat, origin_long, dst_lat, dsst_long)
+        return GPS.distanceFromTo(origin_lat, origin_long, dst_lat, dst_long)
 
     #set Google API key:
     @classmethod
@@ -187,4 +198,5 @@ if __name__ == "__main__":
     dst_lat, dst_long = -26.146446, 28.041632
     #print(myGPS.getRMC())
     #myGPS.ser.write(b"$PMTK101*32\r\n")
-    print(myGPS.getGGA().timestamp)
+    #print(myGPS.getLongLat())
+    print(myGPS.getGLL())
