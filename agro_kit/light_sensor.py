@@ -1,17 +1,17 @@
-# Light Sensor
+# Light Sensor 
 
 # Package import
 import time
 import board
 import busio
 import adafruit_tcs34725
-import RPi.GPIO as GPIO
+import RPi.GPIO as GPIO 
 import json
 
 temp=  0
-sample_rate= 4
+sample_rate= 0
 class light_sensor:
-
+    
     def __init__(self, datapin, pwr_pin  ):
         self.datapin = datapin
         self.pwr_pin = pwr_pin
@@ -20,50 +20,53 @@ class light_sensor:
 
         self.powerUp(pwr_pin)
         i2cbus = busio.I2C(board.SCL, board.SDA)
-
+        
         self.sample_rate = 5
-        #self.temp = light_sensor.color_temperature
-        #self.lux = light_sensor.lux
-        #self.time.sleep(0.5)  # allow for led to illuminate environment for accuracy
-        # Initialize bus and constants.
-        # Decision to power on sensor only when function is called in order to conserve energy
-
+        
         self.light_sensor_config = adafruit_tcs34725.TCS34725(i2cbus)
 
     def powerUp(self, pwr_pin):
          # GPIO PIN  to power sensor
-
-        GPIO.output(self.pwr_pin, 1)
+        
+        GPIO.output(self.pwr_pin, 1) 
 
     def powerDown(self, pwr_pin):
          # GPIO PIN  to power sensor
-
+        
         GPIO.output(self.pwr_pin, 0)
 
     # While loop to read and display sensor data
     def loopRead(self, pwr_pin):
         self.powerUp(pwr_pin)
-
+  
         while True:
             self.powerUp(pwr_pin)
             time.sleep(0.5)
             temp =self.light_sensor_config.color_temperature
             lux = self.light_sensor_config.lux
-            print("Temperature: {0}K Lux: {1}".format(temp, lux))
+            print("Colour Temperature: {0}K Lux: {1}".format(temp, lux))
         # Sample rate for loop
 
             time.sleep(sample_rate)
             self.powerDown(pwr_pin)
             time.sleep(sample_rate)
-        return temp + lux
+      
 
-    # Function to read colour and luminosity
-    def readColourLux(self, pwr_pin):
+
+    def singleReadLux(self, pwr_pin):
         self.powerUp(pwr_pin)
-        temp = self.light_sensor_config.color_temperature
         lux = self.light_sensor_config.lux
-        print("Temperature: {0}K Lux: {1}".format(temp, lux))
-        return temp + lux
+        self.powerDown(pwr_pin)
+        #print(lux)
+        return lux
+
+    def singleReadColour(self, pwr_pin):
+        self.powerUp(pwr_pin)
+        colour = self.light_sensor_config.color_temperature
+        self.powerDown(pwr_pin)
+        #print(colour)
+        return colour  
+
 
     # Function to read luminosity
     def lux(self,pwr_pin):
@@ -71,19 +74,20 @@ class light_sensor:
         #lux = light_sensor.lux
         lux = self.light_sensor_config.lux
         print("Lux: {1}".format(temp, lux))
-        return lux
+        return lux 
 
-    # Function to read colour # Could be used for plant health? Green/Brown
+    # Function to read colour 
     def colour(self,pwr_pin):
         self.powerUp(pwr_pin)
-        colour = self.light_sensor_config.color_temperature
-        print("Temperature: {0}K".format(temp))
-        return colour
+        time.sleep(0.5)
+        colour_temp = self.light_sensor_config.color_temperature
+        print("Colour Temperature: {0}K".format(colour_temp))
+        return colour_temp
 
     # Function to read individual colours
     def RGB(self,pwr_pin):
         self.powerUp(pwr_pin)
-        print('Color: (Red {0}, Green {1}, Blue {2})'.format(*self.light_sensor_config.color_rgb_bytes))
+        print('Colour: (Red {0}, Green {1}, Blue {2})'.format(*self.light_sensor_config.color_rgb_bytes))
 
     # Set Sample Rate
     def setSampleRate(self, Rate):
@@ -99,17 +103,16 @@ class light_sensor:
         self.powerUp(pwr_pin)
         sunset = self.light_sensor_config.lux
 
-    #colour()
-    #lux()
+#  For testing
+    
+if __name__ == "__main__":
+    light_sensor_test = light_sensor(17, 17)
+    
+    light_sensor_test.RGB(17)
+    light_sensor_test.lux(17)
+    light_sensor_test.powerUp(17)
+    light_sensor_test.colour(17)
+    light_sensor_test.singleReadColour(17)
+    light_sensor_test.powerDown(17)
 
-    #readColourLux()
-    #RGB()
-    #GPIO.output(17, 0) # remove power from sensor
 
-light_sensor_test = light_sensor(17, 17)
-light_sensor_test.readColourLux(17)
-light_sensor_test.RGB(17)
-light_sensor_test.colour(17)
-light_sensor_test.readColourLux(17)
-light_sensor_test.powerDown(17) # remove power from sensor
-#light_sensor_test.loopRead(17)
