@@ -19,7 +19,7 @@ def main():
     global exit# use global exit var
     global myAG
     options = '''1) Read Moisture\n2) Read Lux\n3) Read GPS RMC Message \
-    \n4) Full Read \n5) View profiles file\n6) Create profile\n7) Load profile\n8) Full Read and check within range \n9) Read and log data\n10) View readings logged in last 24hrs\n10)q) exit'''
+    \n4) Full Read \n5) View profiles file\n6) Create profile\n7) Load profile\n8) Full Read and check within range \n9) Read and log data\n10) View readings logged in last 24hrs\nq) exit'''
     print(options)
     cmd = input("\nEnter a command:\n")
     print("\n")
