@@ -97,7 +97,6 @@ class MoistureSensor:
         sleep(self.dly)
         GPIO.output(self.pwr_pin, GPIO.LOW)
         moisture = ((val-self.MIN_READING)/(self.MAX_READING - self.MIN_READING))*100 #converts to percentage
-        print("Moisture: " + str(moisture))
         return moisture
 
     @classmethod

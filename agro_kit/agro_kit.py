@@ -57,8 +57,10 @@ class AgroKit:
                 self.MIN_MOISTURE = profile[name]["moisture"][0]
                 self.MAX_LUX = profile[name]["lux"][1]
                 self.MIN_LUX = profile[name]["lux"][0]
+                print("Profile " + '\'' + name + "\' loaded.\n")
             except Exception as e:
                 print(e)
+                print('Profile does not exist')
 
     def readingOK(self, reading):
         ok = True
