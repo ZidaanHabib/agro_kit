@@ -107,7 +107,7 @@ class AgroKit:
                     except:
                         break #if can't then we've reached the top line so break
                     if (now - date).days == 0: #within 24 hours
-                        print("bingo")
+                        print(line)
                     else:
                         break
         except Exception as e:
@@ -150,4 +150,4 @@ if __name__ == "__main__":
     myAG.loadProfile("test")
     lux = myAG.LS.singleReadLux()
     #myAG.logData(myAG.GPS.getRMC(), myAG.GPS.getGGA(), myAG.GPS.getGLL(), myAG.MS.singleRead(), lux)
-    myAG.read()
+    myAG.last24Hrs('log.txt')
