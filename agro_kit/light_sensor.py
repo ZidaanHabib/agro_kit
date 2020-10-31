@@ -27,7 +27,7 @@ class light_sensor:
         self.sample_rate = 5
 
         self.light_sensor_config = adafruit_tcs34725.TCS34725(i2cbus)
-        self.powerDown(pwr_pin)
+        #self.powerDown(pwr_pin)
 
 
     def set_pwr_pin(self,pin_num):
@@ -63,9 +63,9 @@ class light_sensor:
 
 
     def singleReadLux(self):
-        self.powerUp(pwr_pin)
+        #self.powerUp(pwr_pin)
         lux = self.light_sensor_config.lux
-        self.powerDown(pwr_pin)
+        #self.powerDown(pwr_pin)
         #print(lux)
         return lux
 
@@ -119,8 +119,8 @@ if __name__ == "__main__":
     light_sensor_test.singleReadLux()
 
     #'''light_sensor_test.RGB(17)
-    light_sensor_test.lux(17)
+    #light_sensor_test.lux(17)
     #light_sensor_test.powerUp(17)
-    light_sensor_test.colour(17)
+    #light_sensor_test.colour(17)
     #light_sensor_test.singleReadColour(17)
-    light_sensor_test.powerDown(17)
+    #light_sensor_test.powerDown(17)
