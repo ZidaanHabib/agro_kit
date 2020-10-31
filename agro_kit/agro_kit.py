@@ -62,11 +62,20 @@ class AgroKit:
                 print(e)
                 print('Profile does not exist')
 
-    def readingOK(self, reading):
+    def readingOK(self,reading, msg):
         ok = True
         if reading.moisture < self.MIN_MOISTURE or reading.moisture > self.MAX_MOISTURE or reading.lux < self.MIN_LUX or reading.lux > self.MAX_LUX:
             ok = False
-
+            if reading.moisture < self.MIN_MOISTURE:
+                msg[0] = "Moisture too low;"
+            elif reading.moisture > self.MAX_MOISTURE:
+                msg[0] = "Moisture too high;"
+            if reading.lux < self.MIN_LUX:
+                msg[0] = msg[0] + "lux too low\n"
+            elif  reading.lux > self.MAX_LUX:
+                msg[0] = msg[0] + "lux too high\n"
+        else:
+            msg[0] = 'Moisture and lux within range of current profile'
         return ok
 
 

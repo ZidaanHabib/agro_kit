@@ -205,8 +205,9 @@ if __name__ == "__main__":
         f.close()
     GPS.setAPIKey(API_KEY)
     dst_lat, dst_long = -26.146446, 28.041632
-    #print(myGPS.getRMC())
+    print(myGPS.getGLL())
     #myGPS.ser.write(b"$PMTK101*32\r\n")
     #print(myGPS.getLongLat())
     #myGPS.ser.write("$PQFLP,R*25\r\n".encode())
     #myGPS.continuousRead()
+    #myGPS.enableURC(0,1 )
