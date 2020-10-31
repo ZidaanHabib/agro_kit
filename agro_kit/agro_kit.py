@@ -12,7 +12,6 @@ from file_read_backwards import FileReadBackwards
 ###############################################################################
 class AgroKit:
 
-
     def __init__(self): #creating an agro_kit object consisting of a gps, moisture sensor object
         #creating individual sensor instances
         self.MS = MoistureSensor(21, 0, 7, 18)
@@ -34,11 +33,18 @@ class AgroKit:
         dt = RMC_msg.datetime #time stamp
         str_datetime = dt.strftime("%Y-%m-%d %H:%M:%S")
         moisture = round(self.MS.singleRead()) #moisture level as a percentage
-        lux = self.LS.singleReadLux(17)
-        output = str_datetime + "\tMoisture: " + str(moisture) + "\tLux: " + str(lux) + "\tLocation:" + loc + "\tAltitude: " + str(alt) +"%\n"
-        reading = Reading(moisture,lux, RMC_msg)
+        try:
+            light = self.LS.singleReadLux()
+        except Exception as e:
+            print(e)
+            light = 100
+            self.LS.powerDown(17)
+        #lux = 0
+        output = str_datetime + "\tMoisture: " + str(moisture) + "\tLux: " + str(light) + "\tLocation:" + loc + "\tAltitude: " + str(alt) +"\n"
         print(output)
-        return reading
+        return Reading(moisture,light, RMC_msg)
+
+        #return reading
 
 
     #def readingOK(self,reading):
@@ -128,7 +134,9 @@ def createProfile(name, minMoisture, maxMoisture, minLux, maxLux):
 ####################################################################################
 
 
-myAG = AgroKit()
-myAG.loadProfile("test")
-#myAG.logData(myAG.GPS.getRMC(), myAG.GPS.getGGA(), myAG.GPS.getGLL(), myAG.MS.singleRead(), myAG.LS.singleReadLux(17))
-print(myAG.read())
+if __name__ == "__main__":
+    myAG = AgroKit()
+    myAG.loadProfile("test")
+    lux = myAG.LS.singleReadLux()
+    #myAG.logData(myAG.GPS.getRMC(), myAG.GPS.getGGA(), myAG.GPS.getGLL(), myAG.MS.singleRead(), lux)
+    myAG.read()

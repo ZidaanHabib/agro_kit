@@ -208,5 +208,5 @@ if __name__ == "__main__":
     #print(myGPS.getRMC())
     #myGPS.ser.write(b"$PMTK101*32\r\n")
     #print(myGPS.getLongLat())
-    myGPS.ser.write("$PQFLP,R*25\r\n".encode())
-    myGPS.continuousRead()
+    #myGPS.ser.write("$PQFLP,R*25\r\n".encode())
+    #myGPS.continuousRead()

@@ -27,7 +27,7 @@ class MoistureSensor:
         self.dly = 0.1
         #self.MAX_READING = 1
         #self.MIN_READING = 0
-        GPIO.setwarnings(False)  
+        GPIO.setwarnings(False)
         GPIO.setmode(GPIO.BCM) # use broadcom pin numbering
         GPIO.setup(self.pwr_pin, GPIO.OUT) # set pin to output mode
 
@@ -97,6 +97,7 @@ class MoistureSensor:
         sleep(self.dly)
         GPIO.output(self.pwr_pin, GPIO.LOW)
         moisture = ((val-self.MIN_READING)/(self.MAX_READING - self.MIN_READING))*100 #converts to percentage
+        print("Moisture: " + str(moisture))
         return moisture
 
     @classmethod
