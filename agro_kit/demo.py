@@ -19,7 +19,7 @@ def main():
     global exit# use global exit var
     global myAG
     options = '''1) Read Moisture\n2) Read Lux\n3) Read GPS RMC Message \
-    \n4) Full Read \n5) Create profile\n6) Load profile\n7) Full Read and check within range \nq) exit'''
+    \n4) Full Read \n5) Create profile\n6) Load profile\n7) View profiles file\n8) Full Read and check within range \nq) exit'''
     print(options)
     cmd = input("\nEnter a command:\n")
     print("\n")
@@ -45,14 +45,14 @@ def main():
         print('Min Moisture: ' + str(myAG.MIN_MOISTURE) + "\tMax Moisture: " + str(myAG.MAX_MOISTURE)\
         + "\tMin Lux: " + str(myAG.MIN_LUX) + "\tMax Lux: " + str(myAG.MAX_LUX))
     elif cmd == '7':
+        os.system("more profiles.json")
+    elif cmd == '8':
         reading = myAG.read()
         msg = ['']
         ok = myAG.readingOK(reading, msg)
         print(msg[0])
     else:
         exit = True
-
-
 
 if __name__ == "__main__":
     setup()
