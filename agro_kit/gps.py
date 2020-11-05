@@ -9,9 +9,9 @@ import requests
 import sys
 
 class GPS():
-    """ Class to represent a GPS sensor object
+    """ Class to represent a GPS sensor object """
 
-    Attributes:
+    """Attributes:
     BAUD_RATES -- list of supported baud rates for GPS Sensor
     BAUD_RATE_CHKSUMS -- dictionary of NMEA check sums for the manufacturer NMEA commands to configure baud rate of GPS Sensor
     PQEPE_CHKSUMS -- dictionary of NMEA checksums for manufacturer commands to configure URC messages for GPS Sensor
@@ -53,9 +53,9 @@ class GPS():
     def setGPSBaudRate(self, baud_rate):    #note that only baud rates of 4800, 9600, 14400, 19200, 38400, 57600, 115200 are allowed
         """ Method to configure the baud rate of the GPS module
 
-            arguments:
-            baud_rate -- baud rate of GPS module
-            """
+        arguments:
+        baud_rate -- baud rate of GPS module
+        """
         if baud_rate in GPS.BAUD_RATES:
             str_baud_rate = str(baud_rate)
             cmd = '$PQBAUD,W,' + str_baud_rate + '*' + GPS.BAUD_RATE_CHKSUMS[str_baud_rate] + "\r\n"

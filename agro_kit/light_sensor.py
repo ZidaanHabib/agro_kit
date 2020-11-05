@@ -28,7 +28,7 @@ class light_sensor:
 
     def set_pwr_pin(self,pin_num):
         """ Set power source pin number to light sensor object.
-        
+
         arguments:
         pin_num -- power supply pin to light sensor
         """
@@ -37,7 +37,7 @@ class light_sensor:
 
     def setSampleRate(self, Rate):
         """Input rate to set the refresh display rate of continous read functions.
-        
+
         arguments:
         Rate -- delay rate in seconds
         """
@@ -45,7 +45,7 @@ class light_sensor:
 
     def sunlight(self,pwr_pin):
         """Input pwr_pin. Calibrate light sensor for full sunshine lux value, light sensor reads lux value and returns sunlight lux value.
-        
+
         arguments:
         pwr_pin -- allocated pwr_pin to light sensor
         """
@@ -55,7 +55,7 @@ class light_sensor:
 
     def sunset(self,pwr_pin):
          """Calibrate light sensor for sunset lux value, light sensor reads lux value and returns sunset lux value.
-         
+
          arguments:
         pwr_pin -- allocated pwr_pin to light sensor
         """
@@ -65,7 +65,7 @@ class light_sensor:
 
     def powerUp(self, pwr_pin):
         """Turn on power source (GPIO output) to light sensor.
-        
+
         arguments:
         pwr_pin -- allocated pwr_pin to light sensor
         """
@@ -73,7 +73,7 @@ class light_sensor:
 
     def powerDown(self, pwr_pin):
         """Turn off power source (GPIO output) to light sensor.
-        
+
         arguments:
         pwr_pin -- allocated pwr_pin to light sensor
         """
@@ -113,7 +113,7 @@ class light_sensor:
 
     def lux(self,pwr_pin):
         """Read light sensor lux value, format and print, return lux.
-        
+
         arguments:
         pwr_pin -- allocated pwr_pin to light sensor
         """
@@ -124,7 +124,7 @@ class light_sensor:
 
     def colour(self,pwr_pin):
         """Read light sensor colour value, format and print, return colour.
-        
+
         arguments:
         pwr_pin -- allocated pwr_pin to light sensor
         """
@@ -136,16 +136,9 @@ class light_sensor:
 
     def RGB(self,pwr_pin):
         """Read light sensor RGB values, format and print.
-        
+
         arguments:
         pwr_pin -- allocated pwr_pin to light sensor
         """
         self.powerUp(pwr_pin)
         print('Colour: (Red {0}, Green {1}, Blue {2})'.format(*self.light_sensor_config.color_rgb_bytes))
-
-
-
-
-
-
-
