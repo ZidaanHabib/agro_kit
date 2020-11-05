@@ -8,12 +8,13 @@ import os
 from datetime import datetime
 from file_read_backwards import FileReadBackwards
 ###########################################################################3#
-'''AgroKit class to interface with hardware'''
+
 ###############################################################################
 class AgroKit:
+    '''AgroKit class to interface with hardware'''
 
     def __init__(self): #creating an agro_kit object consisting of a gps, moisture sensor object
-        #creating individual sensor instances
+        """ Instantiate AgroKit object with default values"""
         self.MS = MoistureSensor(21, 0, 7, 18)
         self.GPS = GPS()
         self.LS = light_sensor(17, 17)
@@ -25,6 +26,7 @@ class AgroKit:
 
 
     def read(self):
+        """ Method to read and return moisture, light and GPS data from sensors as a Reading object """
         #loc = self.GPS.getLongLat()
         loc = self.GPS.getLongLat(self.GPS.getGLL())
         RMC_msg = self.GPS.getRMC()
@@ -44,12 +46,14 @@ class AgroKit:
         print(output)
         return Reading(moisture,light, RMC_msg)
 
-        #return reading
 
-
-    #def readingOK(self,reading):
 
     def loadProfile(self,name):
+        """ Method to load values from stored profile into AgroKit object variables
+
+        arguments:
+        name -- name of profile to load
+        """
         with open("profiles.json", 'r') as f:
             try:
                 profile = json.load(f)
@@ -63,6 +67,12 @@ class AgroKit:
                 print('Profile does not exist')
 
     def readingOK(self,reading, msg):
+        """ Check if reading values fall within the ranges loaded from active profile and return a boolean
+
+        arguements:
+        reading -- Reading object
+        msg -- string thats passed into method which is changed to give more info about the current reading
+        """
         ok = True
         if reading.moisture < self.MIN_MOISTURE or reading.moisture > self.MAX_MOISTURE or reading.lux < self.MIN_LUX or reading.lux > self.MAX_LUX:
             ok = False
@@ -80,6 +90,15 @@ class AgroKit:
 
 
     def logData(self, rmc, gga, gll, moist, lux):
+        """ Method to write information to a text file
+
+        arguments:
+        rmc -- pymnea2 nmea object for GPRMC message
+        gga -- pymnea2 nmea object for GPGGA message
+        gll -- pymnea2 nmea object for GPGLL message
+        moist -- moisture reading as a number
+        lux -- lux reading as a number
+        """
         dt = rmc.datetime #time stamp
         time = dt.strftime("%Y-%m-%d %H:%M:%S")
         alt = gga.altitude
@@ -98,8 +117,14 @@ class AgroKit:
                 f.close()
 
     def last24Hrs(self, filename):
+        """ Method to display data logged within past 24 hours to a text file
+
+        arguments:
+        filename -- name of log text file
+        """
         try:
             now = datetime.utcnow()
+            print("Time\t\t\tMoisture\t\tLux\t\t\tAltitude\t\tLocation\n")
             with FileReadBackwards('log.txt', encoding="utf-8") as f:
                 for line in f:
                     try:
@@ -114,21 +139,37 @@ class AgroKit:
             print(e)
 
 #############################################################################
-'''class for agro_kit reading:'''
+#class for agro_kit reading:
 #############################################################################
 
 class Reading:
-
+    """ Class to represent an aggregate reading from moisture sensor, light sensor and GPS """
     def __init__(self, moisture, lux, gps):
+        """ Instantiate Reading object from keyword arguments
+
+        arguments:
+        moisture -- moisture reading as number
+        lux -- lux reading as number
+        gps -- pynmea2 nmea GPRMC object
+        """
         self.moisture = moisture
         self.lux = lux
         self.gps = gps
 #############################################################################
 
 ###############################################################################
-''' General Library methods'''
+#General Library methods
 #######################################################################33#
 def createProfile(name, minMoisture, maxMoisture, minLux, maxLux):
+    """ Method to create a custom sensor profile with moisture and lux ranges
+
+    arguments:
+    name -- name of new profile
+    minMoisture -- minimum value for moisture
+    maxMoisture -- maximum value for moisture
+    minLux -- minimum value for lux
+    maxLux -- maximum value for lux
+    """
     entry = { name: {"moisture": [minMoisture, maxMoisture], "lux": [minLux, maxLux]}}
     with open("profiles.json", "r") as f:
         try:

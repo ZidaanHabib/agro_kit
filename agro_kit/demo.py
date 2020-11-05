@@ -56,8 +56,8 @@ def main():
         gll = myAG.GPS.getGLL()
         rmc = myAG.GPS.getRMC()
         gga = myAG.GPS.getGGA()
-        moist = myAG.GPS.singleRead()
-        lux = myAG.GPS.singleReadLux()
+        moist = myAG.MS.singleRead()
+        lux = myAG.LS.singleReadLux()
         myAG.logData(rmc, gga, gll, moist, lux)
     elif cmd == '10':
         myAG.last24Hrs('log.txt')

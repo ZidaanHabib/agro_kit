@@ -2,7 +2,7 @@
   "moisture_sensor":
     {
       "max": 500 ,
-      "min": 1,
+      "min": 0,
       "ranges":
         {
           "dummy": 0
