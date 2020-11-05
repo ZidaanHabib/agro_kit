@@ -90,7 +90,7 @@ class AgroKit:
         return ok
 
 
-    def logData(self, rmc, gga, gll, moist, lux):
+    def logData(self, rmc, gga, gll, moist, lux, filename):
         """ Method to write information to a text file
 
         arguments:
@@ -99,6 +99,7 @@ class AgroKit:
         gll -- pymnea2 nmea object for GPGLL message
         moist -- moisture reading as a number
         lux -- lux reading as a number
+        filename -- name of log file
         """
         dt = rmc.datetime #time stamp
         time = dt.strftime("%Y-%m-%d %H:%M:%S")
@@ -107,12 +108,12 @@ class AgroKit:
         string = time + "\t" + str(moist) + "\t" + str(lux) + "\t" + str(alt) + "\t\t" + loc + '\n'
         print(string)
 
-        if os.path.exists('log.txt'):
+        if os.path.exists(filename):
             with open('log.txt', 'a') as f:
                 f.write(string)
                 f.close()
         else:
-            with open('log.txt', 'a') as f:
+            with open(filename, 'a') as f:
                 f.write("Time\t\t\tMoisture\t\tLux\t\t\tAltitude\t\tLocation\n")
                 f.write(string)
                 f.close()
