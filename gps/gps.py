@@ -224,7 +224,7 @@ class GPS():
 #Methods for the Distance Matrix API:
 #######################################################################################3
 
-    
+
     def distanceTo(self, dst_lat, dst_long):
         """ Determine distance from current coordinates to an entered set of coordinates.
 

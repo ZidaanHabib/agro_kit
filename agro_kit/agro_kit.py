@@ -2,10 +2,11 @@
 
 import json
 import os
+import sys
 from datetime import datetime
 from file_read_backwards import FileReadBackwards
 sys.path.append("../")
-from from moisture_sensor.moisture_sensor import MoistureSensor
+from moisture_sensor.moisture_sensor import MoistureSensor
 from light_sensor.light_sensor import light_sensor
 from gps.gps import GPS
 ###########################################################################3#
@@ -160,7 +161,7 @@ class AgroKit:
         with open("profiles.json", "w") as h:
             profile.update(entry)
             try:
-                json.dump(profile,h, indent=4)
+                json.dump(profile,h, indent = 4)
             except Exception as e:
                 print(e)
 
