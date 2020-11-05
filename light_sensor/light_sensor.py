@@ -8,7 +8,7 @@ import RPi.GPIO as GPIO
 class light_sensor:
     """ Class to represent light sensor object """
 
-    def __init__(self, datapin, pwr_pin=17  ):
+    def __init__(self, datapin, pwr_pin = 17  ):
         """Instantiate Light Sensor object using keyword arguments."""
         self.datapin = datapin
         self.pwr_pin = pwr_pin
