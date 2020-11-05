@@ -54,9 +54,9 @@ class light_sensor:
         return sunlight
 
     def sunset(self,pwr_pin):
-         """Calibrate light sensor for sunset lux value, light sensor reads lux value and returns sunset lux value.
+        """Calibrate light sensor for sunset lux value, light sensor reads lux value and returns sunset lux value.
 
-         arguments:
+        arguments:
         pwr_pin -- allocated pwr_pin to light sensor
         """
         self.powerUp(pwr_pin)

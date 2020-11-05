@@ -205,9 +205,9 @@ class GPS():
     def getLongLat(self, gll):
         """ Return the current longitude and latitude coordinates as a string
 
-        arguments:
-        gll -- pynmea2 NMEA object for a GPGLL message
-        """
+            arguments:
+            gll -- pynmea2 NMEA object for a GPGLL message
+            """
         #nmea_obj = self.getGLL()
         nmea_obj = gll
         res = str(nmea_obj.latitude) + ',' + nmea_obj.lat_dir + ','+ str(nmea_obj.longitude) + "," + nmea_obj.lon_dir
@@ -258,13 +258,13 @@ class GPS():
         dst_lat -- latitude coordinates of destination location
         dst_long -- longitude coordinates of destination location
         """
-        #if origin_lat.isNumeric() and origin_lat.isNumeric() and isNumeric(dst_lat) and isNumeric(dst_long):
+        
         url1 = 'https://maps.googleapis.com/maps/api/distancematrix/json?'
         url2 = 'origins='+str(origin_lat) + ',' + str(origin_long)
         url3 = '&destinations=' +str(dst_lat) + ',' + str(dst_long)
         url4 = "&mode=car&key=" + GPS.API_KEY
         url = url1 + url2 + url3 + url4
-        output = requests.get(url).json() #sending get request to google maps Distance MatriX API
+        output = requests.get(url).json()    #sending get request to google maps Distance MatriX API
         return output["rows"][0]["elements"][0]["distance"]["value"]
 
 
