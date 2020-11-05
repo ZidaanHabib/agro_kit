@@ -5,6 +5,7 @@ Agrotech Sensor Kit API
 
 An API to facilitate interaction with an agriculture tech sensor kit. The sensor kit
 contains the following hardware modules in addition to the Raspberry Pi Zero W:
+
 * Quectel L70-M39 GPS
 * Adafruit MCP3008 ADC
 * Seeed Studio 10102008 Moisture Sensor
@@ -12,6 +13,18 @@ contains the following hardware modules in addition to the Raspberry Pi Zero W:
 
 
 * Free software: GNU General Public License v3
+
+Features
+---------
+
+* Sensor reading
+
+  * GPS 
+  * Moisture
+  * Lux
+* Creating sensor profiles
+* Logging data to text files
+* Sending configuration commands GPS
 
 Setup
 -------
