@@ -25,22 +25,24 @@ Setup
 Hardware Configuration
 =======================
 
-Note that BCM numbering was used for the Raspberry Pi, with the standard pin numbers in [].
-
-MODULE 	              -      RASPBERRY  PI          -       SEEEDSTUDIO 101020008
+Pin numbers according to datasheets are shown in []
 
 * Adafruit TCS34735 -> Raspberry Pi
+
   * VDD [1] ->                     GPIO-17 [11]
   * GND [2] ->                     GND
   * SDA [3] ->                     SDA1_I2C [3]
   * SCL [4] ->                     SCL1_I2C [5]
 
 * Seeed Studio -> Raspberry Pi
+
   * [3] -> GPIO23 [16]
   * [4] -> GND
 * MCP3008 -> Seed Studio
+
   * CHO 0 [1] -> [1]
 * MCP3008 -> Raspberry Pi
+
   * GND [9]  ->                    GND
   * CS [10]  ->                    GPIO_SPI_CE0 [24]
   * D-IN [11]  ->                  GPIO_SPI_MOSI [19]
@@ -51,6 +53,7 @@ MODULE 	              -      RASPBERRY  PI          -       SEEEDSTUDIO 10102000
   * VDD [16]   ->                  3.3 V [17]
 
 * QUECTEL L70-M39
+
   * TXD [2]  ->                    GPIO_15_UART_RXD [10]
   * RXD [3]    ->                  GPIO_14_UART_TXD [8]
   * VCC [8]    ->                  3.3 V [1]
