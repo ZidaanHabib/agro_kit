@@ -17,23 +17,52 @@ Setup
 -------
 * Ensure SPI, I2C and UART are enabled on the Raspberry Pi. This can be done using the sudo raspi-config command in the Linux terminal.
 * Install required packages. These can be done as follows:
-  * pip3 install Adafruit_GPIO  Adafruit_MCP3008 Adafruit-Blinka
-  * pip3 install file-read-backwards requests pynmea2 adafruit-circuitpython-tcs34725
-  * pip3 install RPi.GPIO
 
-Features
+  * pip3 install Adafruit_GPIO  Adafruit_MCP3008 Adafruit-Blinka
+  * pip3 install file-read-backwards requests pynmea2
+  * pip3 install RPi.GPIO adafruit-circuitpython-tcs34725
+
+Hardware Configuration
+=======================
+
+Note that BCM numbering was used for the Raspberry Pi pin numbers.
+
+MODULE 	              -      RASPBERRY  PI          -       SEEEDSTUDIO 101020008
+
+Adafruit TCS34735
+- VDD [1]                      GPIO-17 [11]
+- GND [2]                      GND
+- SDA [3]                      SDA1_I2C [3]
+- SCL [4]                      SCL1_I2C [5]
+
+MCP3008
+- CHO 0 [1]                                                         [1]
+- GND [9]                      GND                                  [4]
+- CS [10]                      GPIO_SPI_CE0 [24]
+- D-IN [11]                    GPIO_SPI_MOSI [19]
+- D-OUT [12]                   GPIO_SPI_MISO [21]
+- CLK [13]                     GPIO_SPI_CLK [23]
+- GND [14]                     GND
+- VREF [15]                    3.3 V [17]
+- VDD [16]                     3.3 V [17]                           [3]
+
+QUECTEL L70-M39
+- TXD [2]                      GPIO_15_UART_RXD [10]
+- RXD [3]                      GPIO_14_UART_TXD [8]
+- VCC [8]                      3.3 V [1]
+- GND [1]                      GND
+
+
+
+About
 --------
 
-The library includes 4 main classes: MoistureSensor, light_sensor, GPS and AgroKit.
-The breakdown of the methods in these are explained below:
+* The library includes 4 main classes: MoistureSensor, light_sensor, GPS and AgroKit.
+* The AgroKit is an aggregated class built with attributes of the other sensor classes
+* The AgroKit class can use any instance method available in the other sensor classes as well as its own aggregated methods
 
-MoistureSensor
-===============
-This class provides methods that relate to reading and using the moisture sensor.
-
-
-light_sensor
-=============
+Link to documentation
+----------------------
 
 
 
