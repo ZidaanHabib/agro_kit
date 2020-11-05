@@ -1,20 +1,21 @@
 """Main module."""
 
 import json
-from moisture_sensor import MoistureSensor
-from gps import GPS
-from light_sensor import light_sensor
 import os
 from datetime import datetime
 from file_read_backwards import FileReadBackwards
+sys.path.append("../")
+from from moisture_sensor.moisture_sensor import MoistureSensor
+from light_sensor.light_sensor import light_sensor
+from gps.gps import GPS
 ###########################################################################3#
 
 ###############################################################################
 class AgroKit:
     '''AgroKit class to interface with hardware'''
 
-    def __init__(self): #creating an agro_kit object consisting of a gps, moisture sensor object
-        """ Instantiate AgroKit object with default values"""
+    def __init__(self):
+        """ Instantiate AgroKit object with default values and other sensor attributes """
         self.MS = MoistureSensor(21, 0, 7, 18)
         self.GPS = GPS()
         self.LS = light_sensor(17, 17)
@@ -138,6 +139,31 @@ class AgroKit:
         except Exception as e:
             print(e)
 
+
+    @classmethod
+    def createProfile(name, minMoisture, maxMoisture, minLux, maxLux):
+        """ Method to create a custom sensor profile with moisture and lux ranges
+
+        arguments:
+        name -- name of new profile
+        minMoisture -- minimum value for moisture
+        maxMoisture -- maximum value for moisture
+        minLux -- minimum value for lux
+        maxLux -- maximum value for lux
+        """
+        entry = { name: {"moisture": [minMoisture, maxMoisture], "lux": [minLux, maxLux]}}
+        with open("profiles.json", "r") as f:
+            try:
+                profile = json.load(f)
+            except:
+                profile = {}
+        with open("profiles.json", "w") as h:
+            profile.update(entry)
+            try:
+                json.dump(profile,h, indent=4)
+            except Exception as e:
+                print(e)
+
 #############################################################################
 #class for agro_kit reading:
 #############################################################################
@@ -157,33 +183,6 @@ class Reading:
         self.gps = gps
 #############################################################################
 
-###############################################################################
-#General Library methods
-#######################################################################33#
-def createProfile(name, minMoisture, maxMoisture, minLux, maxLux):
-    """ Method to create a custom sensor profile with moisture and lux ranges
-
-    arguments:
-    name -- name of new profile
-    minMoisture -- minimum value for moisture
-    maxMoisture -- maximum value for moisture
-    minLux -- minimum value for lux
-    maxLux -- maximum value for lux
-    """
-    entry = { name: {"moisture": [minMoisture, maxMoisture], "lux": [minLux, maxLux]}}
-    with open("profiles.json", "r") as f:
-        try:
-            profile = json.load(f)
-        except:
-            profile = {}
-    with open("profiles.json", "w") as h:
-        profile.update(entry)
-        try:
-            json.dump(profile,h, indent=4)
-        except Exception as e:
-            print(e)
-
-####################################################################################
 
 
 if __name__ == "__main__":

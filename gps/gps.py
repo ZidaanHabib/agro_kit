@@ -224,7 +224,7 @@ class GPS():
 #Methods for the Distance Matrix API:
 #######################################################################################3
 
-
+    
     def distanceTo(self, dst_lat, dst_long):
         """ Determine distance from current coordinates to an entered set of coordinates.
 
@@ -258,7 +258,7 @@ class GPS():
         dst_lat -- latitude coordinates of destination location
         dst_long -- longitude coordinates of destination location
         """
-        
+
         url1 = 'https://maps.googleapis.com/maps/api/distancematrix/json?'
         url2 = 'origins='+str(origin_lat) + ',' + str(origin_long)
         url3 = '&destinations=' +str(dst_lat) + ',' + str(dst_long)

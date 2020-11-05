@@ -4,12 +4,13 @@ import busio
 import adafruit_tcs34725
 import RPi.GPIO as GPIO
 
-# default values:
-temp=  0
-sample_rate= 0
-pwr_pin = 17
 
 class light_sensor:
+    """ Class to represent light sensor object """
+
+    temp =  0
+    sample_rate = 0
+    pwr_pin = 17
 
     def __init__(self, datapin, pwr_pin  ):
         """Instantiate Light Sensor object using keyword arguments."""
