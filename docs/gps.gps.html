@@ -1,0 +1,165 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module gps.gps</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong><a href="gps.html"><font color="#ffffff">gps</font></a>.gps</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/home/pi/agro_kit/gps/gps.py">/home/pi/agro_kit/gps/gps.py</a></font></td></tr></table>
+    <p><tt><a href="#GPS">GPS</a>&nbsp;Library</tt></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="json.html">json</a><br>
+<a href="pynmea2.html">pynmea2</a><br>
+</td><td width="25%" valign=top><a href="requests.html">requests</a><br>
+<a href="serial.html">serial</a><br>
+</td><td width="25%" valign=top><a href="sys.html">sys</a><br>
+</td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ee77aa">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Classes</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#ee77aa"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl>
+<dt><font face="helvetica, arial"><a href="builtins.html#object">builtins.object</a>
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="gps.gps.html#GPS">GPS</a>
+</font></dt></dl>
+</dd>
+</dl>
+ <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="GPS">class <strong>GPS</strong></a>(<a href="builtins.html#object">builtins.object</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt><a href="#GPS">GPS</a>(baud_rate=9600,&nbsp;timeout=5)<br>
+&nbsp;<br>
+Class&nbsp;to&nbsp;represent&nbsp;a&nbsp;<a href="#GPS">GPS</a>&nbsp;sensor&nbsp;<a href="builtins.html#object">object</a><br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="GPS-__init__"><strong>__init__</strong></a>(self, baud_rate=9600, timeout=5)</dt><dd><tt>Instantiate&nbsp;<a href="builtins.html#object">object</a>&nbsp;of&nbsp;<a href="#GPS">GPS</a>&nbsp;class&nbsp;using&nbsp;keyword&nbsp;arguments<br>
+&nbsp;<br>
+arguments:<br>
+baud_rate&nbsp;--&nbsp;baud&nbsp;rate&nbsp;of&nbsp;serial&nbsp;port&nbsp;on&nbsp;Raspberry&nbsp;Pi&nbsp;(default&nbsp;9600)<br>
+timeout&nbsp;--&nbsp;delay&nbsp;before&nbsp;timing&nbsp;out&nbsp;when&nbsp;reading&nbsp;from&nbsp;serial&nbsp;port&nbsp;&nbsp;(default&nbsp;5&nbsp;seconds)</tt></dd></dl>
+
+<dl><dt><a name="GPS-coldstart"><strong>coldstart</strong></a>(self)</dt><dd><tt>Restart&nbsp;the&nbsp;<a href="#GPS">GPS</a>&nbsp;module&nbsp;removing&nbsp;most&nbsp;cached&nbsp;satellite&nbsp;data</tt></dd></dl>
+
+<dl><dt><a name="GPS-continuousRead"><strong>continuousRead</strong></a>(self)</dt><dd><tt>Continously&nbsp;print&nbsp;raw&nbsp;NMEA&nbsp;messages&nbsp;to&nbsp;terminal</tt></dd></dl>
+
+<dl><dt><a name="GPS-distanceTo"><strong>distanceTo</strong></a>(self, dst_lat, dst_long)</dt><dd><tt>Determine&nbsp;distance&nbsp;from&nbsp;current&nbsp;coordinates&nbsp;to&nbsp;an&nbsp;entered&nbsp;set&nbsp;of&nbsp;coordinates.<br>
+&nbsp;<br>
+arguments:<br>
+dst_lat&nbsp;--&nbsp;latitude&nbsp;coordinates&nbsp;of&nbsp;destination<br>
+dst_long&nbsp;--&nbsp;longitude&nbsp;coordinates&nbsp;of&nbsp;destination</tt></dd></dl>
+
+<dl><dt><a name="GPS-enableFLP"><strong>enableFLP</strong></a>(self, mode, save)</dt><dd><tt>Method&nbsp;to&nbsp;enable&nbsp;Low&nbsp;Power&nbsp;Mode&nbsp;on&nbsp;the&nbsp;<a href="#GPS">GPS</a>&nbsp;module<br>
+&nbsp;<br>
+arguments:<br>
+mode&nbsp;--&nbsp;1&nbsp;to&nbsp;enable,&nbsp;0&nbsp;to&nbsp;disable<br>
+save&nbsp;--&nbsp;1&nbsp;to&nbsp;save&nbsp;new&nbsp;setting,&nbsp;0&nbsp;to&nbsp;keep&nbsp;setting&nbsp;only&nbsp;for&nbsp;current&nbsp;power&nbsp;cycle</tt></dd></dl>
+
+<dl><dt><a name="GPS-enableURC"><strong>enableURC</strong></a>(self, mode, save)</dt><dd><tt>Method&nbsp;to&nbsp;enable&nbsp;<a href="#GPS">GPS</a>&nbsp;to&nbsp;read&nbsp;PQEPE&nbsp;NMEA&nbsp;messages<br>
+&nbsp;<br>
+arguments:<br>
+mode&nbsp;--&nbsp;1&nbsp;to&nbsp;enable,&nbsp;0&nbsp;to&nbsp;disable<br>
+save&nbsp;--&nbsp;1&nbsp;to&nbsp;save&nbsp;new&nbsp;setting,&nbsp;0&nbsp;to&nbsp;keep&nbsp;setting&nbsp;only&nbsp;for&nbsp;current&nbsp;power&nbsp;cycle</tt></dd></dl>
+
+<dl><dt><a name="GPS-fullColdStart"><strong>fullColdStart</strong></a>(self)</dt><dd><tt>Restart&nbsp;the&nbsp;<a href="#GPS">GPS</a>&nbsp;module&nbsp;removing&nbsp;all&nbsp;cached&nbsp;satellite&nbsp;data</tt></dd></dl>
+
+<dl><dt><a name="GPS-getAltitude"><strong>getAltitude</strong></a>(self)</dt><dd><tt>Determine&nbsp;current&nbsp;altitude</tt></dd></dl>
+
+<dl><dt><a name="GPS-getGGA"><strong>getGGA</strong></a>(self)</dt><dd><tt>Read&nbsp;a&nbsp;GPGGA&nbsp;NMEA&nbsp;message</tt></dd></dl>
+
+<dl><dt><a name="GPS-getGLL"><strong>getGLL</strong></a>(self)</dt><dd><tt>Read&nbsp;a&nbsp;GPGLL&nbsp;NMEA&nbsp;message</tt></dd></dl>
+
+<dl><dt><a name="GPS-getGSA"><strong>getGSA</strong></a>(self)</dt><dd><tt>Read&nbsp;a&nbsp;GPGSA&nbsp;NMEA&nbsp;message</tt></dd></dl>
+
+<dl><dt><a name="GPS-getGSV"><strong>getGSV</strong></a>(self)</dt><dd><tt>Read&nbsp;a&nbsp;GPGSV&nbsp;NMEA&nbsp;message</tt></dd></dl>
+
+<dl><dt><a name="GPS-getLongLat"><strong>getLongLat</strong></a>(self, gll)</dt><dd><tt>Return&nbsp;the&nbsp;current&nbsp;longitude&nbsp;and&nbsp;latitude&nbsp;coordinates&nbsp;as&nbsp;a&nbsp;string<br>
+&nbsp;<br>
+arguments:<br>
+gll&nbsp;--&nbsp;pynmea2&nbsp;NMEA&nbsp;<a href="builtins.html#object">object</a>&nbsp;for&nbsp;a&nbsp;GPGLL&nbsp;message</tt></dd></dl>
+
+<dl><dt><a name="GPS-getNumSats"><strong>getNumSats</strong></a>(self)</dt><dd><tt>Return&nbsp;how&nbsp;many&nbsp;satellites&nbsp;are&nbsp;currently&nbsp;being&nbsp;used&nbsp;in&nbsp;receiving&nbsp;<a href="#GPS">GPS</a>&nbsp;data</tt></dd></dl>
+
+<dl><dt><a name="GPS-getPQEPE"><strong>getPQEPE</strong></a>(self)</dt><dd><tt>Read&nbsp;a&nbsp;PQEPE&nbsp;NMEA&nbsp;message.&nbsp;URC&nbsp;messages&nbsp;have&nbsp;to&nbsp;be&nbsp;enabled&nbsp;first&nbsp;in&nbsp;order&nbsp;to&nbsp;use&nbsp;this.</tt></dd></dl>
+
+<dl><dt><a name="GPS-getRMC"><strong>getRMC</strong></a>(self)</dt><dd><tt>Read&nbsp;a&nbsp;GPRMC&nbsp;NMEA&nbsp;message</tt></dd></dl>
+
+<dl><dt><a name="GPS-getVTG"><strong>getVTG</strong></a>(self)</dt><dd><tt>Read&nbsp;a&nbsp;GPVTG&nbsp;NMEA&nbsp;message</tt></dd></dl>
+
+<dl><dt><a name="GPS-hotStart"><strong>hotStart</strong></a>(self)</dt><dd><tt>Restart&nbsp;the&nbsp;<a href="#GPS">GPS</a>&nbsp;module&nbsp;making&nbsp;use&nbsp;of&nbsp;previously&nbsp;cached&nbsp;data</tt></dd></dl>
+
+<dl><dt><a name="GPS-setGPSBaudRate"><strong>setGPSBaudRate</strong></a>(self, baud_rate)</dt><dd><tt>Method&nbsp;to&nbsp;configure&nbsp;the&nbsp;baud&nbsp;rate&nbsp;of&nbsp;the&nbsp;<a href="#GPS">GPS</a>&nbsp;module<br>
+&nbsp;<br>
+arguments:<br>
+baud_rate&nbsp;--&nbsp;baud&nbsp;rate&nbsp;of&nbsp;<a href="#GPS">GPS</a>&nbsp;module</tt></dd></dl>
+
+<dl><dt><a name="GPS-warmStart"><strong>warmStart</strong></a>(self)</dt><dd><tt>Restart&nbsp;the&nbsp;<a href="#GPS">GPS</a>&nbsp;module&nbsp;removing&nbsp;some&nbsp;cached&nbsp;satellite&nbsp;data</tt></dd></dl>
+
+<hr>
+Class methods defined here:<br>
+<dl><dt><a name="GPS-distanceFromTo"><strong>distanceFromTo</strong></a>(origin_lat, origin_long, dst_lat, dst_long)<font color="#909090"><font face="helvetica, arial"> from <a href="builtins.html#type">builtins.type</a></font></font></dt><dd><tt>Get&nbsp;distance&nbsp;from&nbsp;entered&nbsp;source&nbsp;coordinates&nbsp;to&nbsp;entered&nbsp;destination&nbsp;coordinates<br>
+&nbsp;<br>
+arguments:<br>
+origin_lat&nbsp;--&nbsp;latitude&nbsp;coordinates&nbsp;of&nbsp;source&nbsp;location<br>
+origin_long&nbsp;--&nbsp;longitude&nbsp;coorindates&nbsp;of&nbsp;source&nbsp;location<br>
+dst_lat&nbsp;--&nbsp;latitude&nbsp;coordinates&nbsp;of&nbsp;destination&nbsp;location<br>
+dst_long&nbsp;--&nbsp;longitude&nbsp;coordinates&nbsp;of&nbsp;destination&nbsp;location</tt></dd></dl>
+
+<dl><dt><a name="GPS-setAPIKey"><strong>setAPIKey</strong></a>(key)<font color="#909090"><font face="helvetica, arial"> from <a href="builtins.html#type">builtins.type</a></font></font></dt><dd><tt>Temporarily&nbsp;save&nbsp;user's&nbsp;Google&nbsp;Maps&nbsp;Distance&nbsp;Matric&nbsp;API&nbsp;key&nbsp;as&nbsp;class&nbsp;attribute&nbsp;for&nbsp;duration&nbsp;of&nbsp;program<br>
+&nbsp;<br>
+arguments:<br>
+key&nbsp;--&nbsp;user's&nbsp;Google&nbsp;API&nbsp;key&nbsp;as&nbsp;a&nbsp;setwarnings</tt></dd></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>API_KEY</strong> = ''</dl>
+
+<dl><dt><strong>BAUD_RATES</strong> = [4800, 9600, 14400, 19200, 38400, 57600, 115200]</dl>
+
+<dl><dt><strong>BAUD_RATE_CHKSUMS</strong> = {'115200': '43', '14400': '75', '19200': '7E', '38400': '7B', '4800': '48', '57600': '70', '9600': '4B'}</dl>
+
+<dl><dt><strong>PQEPE_CHKSUMS</strong> = {'0,0': '2A', '0,1': '2B', '1,0': '2B', '1,1': '2A'}</dl>
+
+<dl><dt><strong>PQFLP_CHKSUMS</strong> = {'0,0': '20', '0,1': '21', '1,0': '21', '1,1': '20'}</dl>
+
+</td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#eeaa77">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt><a name="-sleep"><strong>sleep</strong></a>(...)</dt><dd><tt><a href="#-sleep">sleep</a>(seconds)<br>
+&nbsp;<br>
+Delay&nbsp;execution&nbsp;for&nbsp;a&nbsp;given&nbsp;number&nbsp;of&nbsp;seconds.&nbsp;&nbsp;The&nbsp;argument&nbsp;may&nbsp;be<br>
+a&nbsp;floating&nbsp;point&nbsp;number&nbsp;for&nbsp;subsecond&nbsp;precision.</tt></dd></dl>
+ <dl><dt><a name="-time"><strong>time</strong></a>(...)</dt><dd><tt><a href="#-time">time</a>()&nbsp;-&gt;&nbsp;floating&nbsp;point&nbsp;number<br>
+&nbsp;<br>
+Return&nbsp;the&nbsp;current&nbsp;time&nbsp;in&nbsp;seconds&nbsp;since&nbsp;the&nbsp;Epoch.<br>
+Fractions&nbsp;of&nbsp;a&nbsp;second&nbsp;may&nbsp;be&nbsp;present&nbsp;if&nbsp;the&nbsp;system&nbsp;clock&nbsp;provides&nbsp;them.</tt></dd></dl>
+</td></tr></table>
+</body></html>

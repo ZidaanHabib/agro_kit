@@ -1,0 +1,118 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module moisture_sensor.moisture_sensor</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong><a href="moisture_sensor.html"><font color="#ffffff">moisture_sensor</font></a>.moisture_sensor</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/home/pi/agro_kit/moisture_sensor/moisture_sensor.py">/home/pi/agro_kit/moisture_sensor/moisture_sensor.py</a></font></td></tr></table>
+    <p><tt>Moisture&nbsp;Sensor&nbsp;Library</tt></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="Adafruit_MCP3008.html">Adafruit_MCP3008</a><br>
+</td><td width="25%" valign=top><a href="RPi.GPIO.html">RPi.GPIO</a><br>
+</td><td width="25%" valign=top><a href="Adafruit_GPIO.SPI.html">Adafruit_GPIO.SPI</a><br>
+</td><td width="25%" valign=top><a href="json.html">json</a><br>
+</td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ee77aa">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Classes</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#ee77aa"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl>
+<dt><font face="helvetica, arial"><a href="builtins.html#object">builtins.object</a>
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="moisture_sensor.moisture_sensor.html#MoistureSensor">MoistureSensor</a>
+</font></dt></dl>
+</dd>
+</dl>
+ <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="MoistureSensor">class <strong>MoistureSensor</strong></a>(<a href="builtins.html#object">builtins.object</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt><a href="#MoistureSensor">MoistureSensor</a>(datapin,&nbsp;SPI_PORT,&nbsp;adcChannel,&nbsp;pwr_pin)<br>
+&nbsp;<br>
+Class&nbsp;to&nbsp;represent&nbsp;moisture&nbsp;sensor&nbsp;<a href="builtins.html#object">object</a><br>
+&nbsp;<br>
+Attributes:<br>
+SPI_TYPE&nbsp;--&nbsp;string&nbsp;to&nbsp;specify&nbsp;the&nbsp;type&nbsp;of&nbsp;SPI&nbsp;configuration&nbsp;used&nbsp;for&nbsp;the&nbsp;MCP3008<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="MoistureSensor-__init__"><strong>__init__</strong></a>(self, datapin, SPI_PORT, adcChannel, pwr_pin)</dt><dd><tt>Instantiate&nbsp;<a href="#MoistureSensor">MoistureSensor</a>&nbsp;<a href="builtins.html#object">object</a>&nbsp;using&nbsp;keyword&nbsp;arguments<br>
+&nbsp;<br>
+arguments:<br>
+datapin&nbsp;--&nbsp;integer&nbsp;to&nbsp;represent&nbsp;MISO&nbsp;pin&nbsp;of&nbsp;Raspberry&nbsp;Pi<br>
+SPI_PORT&nbsp;--&nbsp;Chip&nbsp;Select&nbsp;pin&nbsp;used&nbsp;on&nbsp;Raspberry&nbsp;Pi&nbsp;for&nbsp;MCP3008<br>
+adcChannel&nbsp;--&nbsp;channel&nbsp;number&nbsp;of&nbsp;MCP3008&nbsp;which&nbsp;connects&nbsp;to&nbsp;the&nbsp;MISO&nbsp;pin&nbsp;of&nbsp;Raspberry&nbsp;Pi<br>
+pwr_pin&nbsp;--&nbsp;GPIO&nbsp;pin&nbsp;number&nbsp;(BCM)&nbsp;used&nbsp;to&nbsp;provide&nbsp;power&nbsp;to&nbsp;moisture&nbsp;sensor</tt></dd></dl>
+
+<dl><dt><a name="MoistureSensor-calibrate_max"><strong>calibrate_max</strong></a>(self)</dt><dd><tt>Method&nbsp;to&nbsp;set&nbsp;the&nbsp;max&nbsp;moisture&nbsp;value&nbsp;to&nbsp;represent&nbsp;100%</tt></dd></dl>
+
+<dl><dt><a name="MoistureSensor-calibrate_min"><strong>calibrate_min</strong></a>(self)</dt><dd><tt>Method&nbsp;to&nbsp;set&nbsp;the&nbsp;min&nbsp;moisture&nbsp;value&nbsp;to&nbsp;represent&nbsp;100%</tt></dd></dl>
+
+<dl><dt><a name="MoistureSensor-init_SPI"><strong>init_SPI</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="MoistureSensor-setDelay"><strong>setDelay</strong></a>(self, delay)</dt><dd><tt>Method&nbsp;to&nbsp;set&nbsp;the&nbsp;wait&nbsp;time&nbsp;after&nbsp;reading&nbsp;the&nbsp;moisture&nbsp;sensor<br>
+&nbsp;<br>
+arguments:<br>
+delay&nbsp;--&nbsp;wait&nbsp;time&nbsp;after&nbsp;reading&nbsp;moisture&nbsp;Sensor</tt></dd></dl>
+
+<dl><dt><a name="MoistureSensor-setPin"><strong>setPin</strong></a>(self, pin)</dt></dl>
+
+<dl><dt><a name="MoistureSensor-set_pwr_pin"><strong>set_pwr_pin</strong></a>(self, pin_num)</dt><dd><tt>Method&nbsp;to&nbsp;change&nbsp;which&nbsp;pwr_pin&nbsp;is&nbsp;used&nbsp;for&nbsp;the&nbsp;moisture&nbsp;sensor<br>
+&nbsp;<br>
+arguments:<br>
+pin_num&nbsp;--&nbsp;new&nbsp;pin&nbsp;number&nbsp;being&nbsp;used</tt></dd></dl>
+
+<dl><dt><a name="MoistureSensor-singleRead"><strong>singleRead</strong></a>(self)</dt><dd><tt>Method&nbsp;to&nbsp;take&nbsp;a&nbsp;single&nbsp;moisture&nbsp;reading&nbsp;from&nbsp;moisture&nbsp;sensor<br>
+&nbsp;<br>
+return:<br>
+moisture&nbsp;reading&nbsp;as&nbsp;integer</tt></dd></dl>
+
+<hr>
+Class methods defined here:<br>
+<dl><dt><a name="MoistureSensor-createRange"><strong>createRange</strong></a>(min, max, profile_name)<font color="#909090"><font face="helvetica, arial"> from <a href="builtins.html#type">builtins.type</a></font></font></dt><dd><tt>Method&nbsp;to&nbsp;create&nbsp;a&nbsp;moisture&nbsp;range<br>
+&nbsp;<br>
+arguments:<br>
+min&nbsp;--&nbsp;min&nbsp;moisture&nbsp;value<br>
+max&nbsp;--&nbsp;max&nbsp;moisture&nbsp;value<br>
+profile_name&nbsp;--&nbsp;name&nbsp;of&nbsp;profile&nbsp;range</tt></dd></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>SPI_TYPE</strong> = 'HW'</dl>
+
+</td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#eeaa77">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt><a name="-sleep"><strong>sleep</strong></a>(...)</dt><dd><tt><a href="#-sleep">sleep</a>(seconds)<br>
+&nbsp;<br>
+Delay&nbsp;execution&nbsp;for&nbsp;a&nbsp;given&nbsp;number&nbsp;of&nbsp;seconds.&nbsp;&nbsp;The&nbsp;argument&nbsp;may&nbsp;be<br>
+a&nbsp;floating&nbsp;point&nbsp;number&nbsp;for&nbsp;subsecond&nbsp;precision.</tt></dd></dl>
+</td></tr></table>
+</body></html>
