@@ -8,11 +8,7 @@ import RPi.GPIO as GPIO
 class light_sensor:
     """ Class to represent light sensor object """
 
-    temp =  0
-    sample_rate = 0
-    pwr_pin = 17
-
-    def __init__(self, datapin, pwr_pin  ):
+    def __init__(self, datapin, pwr_pin=17  ):
         """Instantiate Light Sensor object using keyword arguments."""
         self.datapin = datapin
         self.pwr_pin = pwr_pin
@@ -23,6 +19,9 @@ class light_sensor:
         self.sample_rate = 5
         self.light_sensor_config = adafruit_tcs34725.TCS34725(i2cbus)
 
+    def __del__(self):
+        """ Destructor method to switch off power pin when light sensor object destroyed """
+        self.powerDown(self.pwr_pin)
 #######################################################################################
 #Configuration methods
 #######################################################################################
@@ -44,23 +43,23 @@ class light_sensor:
         """
         sample_rate = Rate
 
-    def sunlight(self,pwr_pin):
+    def sunlight(self):
         """Input pwr_pin. Calibrate light sensor for full sunshine lux value, light sensor reads lux value and returns sunlight lux value.
 
         arguments:
         pwr_pin -- allocated pwr_pin to light sensor
         """
-        self.powerUp(pwr_pin)
+        self.powerUp(self.pwr_pin)
         sunlight = self.light_sensor_config.lux
         return sunlight
 
-    def sunset(self,pwr_pin):
+    def sunset(self):
         """Calibrate light sensor for sunset lux value, light sensor reads lux value and returns sunset lux value.
 
         arguments:
         pwr_pin -- allocated pwr_pin to light sensor
         """
-        self.powerUp(pwr_pin)
+        self.powerUp(self.pwr_pin)
         sunset = self.light_sensor_config.lux
         return sunset
 
@@ -70,7 +69,7 @@ class light_sensor:
         arguments:
         pwr_pin -- allocated pwr_pin to light sensor
         """
-        GPIO.output(self.pwr_pin, 1)
+        GPIO.output(pwr_pin, 1)
 
     def powerDown(self, pwr_pin):
         """Turn off power source (GPIO output) to light sensor.
@@ -78,27 +77,26 @@ class light_sensor:
         arguments:
         pwr_pin -- allocated pwr_pin to light sensor
         """
-        GPIO.output(self.pwr_pin, 0)
+        GPIO.output(pwr_pin, 0)
 
 #######################################################################################
 #Sensor interrogation methods
 #######################################################################################
 
-    def loopRead(self, pwr_pin):
+    def loopRead(self):
         """Continuously read light sensor lux and colour temp, print, loop.
 
         arguments:
         pwr_pin -- allocated pwr_pin to light sensor
         """
 
-        self.powerUp(pwr_pin)
+        self.powerUp(self.pwr_pin)
         while True:
-            self.powerUp(pwr_pin)
             time.sleep(0.5)
             temp =self.light_sensor_config.color_temperature
             lux = self.light_sensor_config.lux
             print("Colour Temperature: {0}K Lux: {1}".format(temp, lux))
-            time.sleep(sample_rate)
+            time.sleep(light_sensor.sample_rate)
 
     def singleReadLux(self):
         """Read light sensor lux value of object once and return lux."""
@@ -107,39 +105,37 @@ class light_sensor:
 
     def singleReadColour(self):
         """Read light sensor colour value of object once and return colour."""
-        self.powerUp(pwr_pin)
         colour = self.light_sensor_config.color_temperature
-        self.powerDown(pwr_pin)
         return colour
 
-    def lux(self,pwr_pin):
+    def lux(self):
         """Read light sensor lux value, format and print, return lux.
 
         arguments:
         pwr_pin -- allocated pwr_pin to light sensor
         """
-        self.powerUp(pwr_pin)
+        self.powerUp(self.pwr_pin)
         lux = self.light_sensor_config.lux
         print("Lux: {1}".format(temp, lux))
         return lux
 
-    def colour(self,pwr_pin):
+    def colour(self):
         """Read light sensor colour value, format and print, return colour.
 
         arguments:
         pwr_pin -- allocated pwr_pin to light sensor
         """
-        self.powerUp(pwr_pin)
+        self.powerUp(self.pwr_pin)
         time.sleep(0.5)
         colour_temp = self.light_sensor_config.color_temperature
         print("Colour Temperature: {0}K".format(colour_temp))
         return colour_temp
 
-    def RGB(self,pwr_pin):
+    def RGB(self):
         """Read light sensor RGB values, format and print.
 
         arguments:
         pwr_pin -- allocated pwr_pin to light sensor
         """
-        self.powerUp(pwr_pin)
+        self.powerUp(self.pwr_pin)
         print('Colour: (Red {0}, Green {1}, Blue {2})'.format(*self.light_sensor_config.color_rgb_bytes))

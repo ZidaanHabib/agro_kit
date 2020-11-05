@@ -188,4 +188,4 @@ class Reading:
 if __name__ == "__main__":
     myAG = AgroKit()
     myAG.loadProfile("test")
-    AgroKit.createProfile("pytest", 0, 10, 20, 30)
+    myAG.LS.singleReadLux()
