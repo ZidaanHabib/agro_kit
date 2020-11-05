@@ -3,30 +3,39 @@ Agrotech Sensor Kit API
 =======================
 
 
-.. image:: https://img.shields.io/pypi/v/agro_kit.svg
-        :target: https://pypi.python.org/pypi/agro_kit
-
-.. image:: https://img.shields.io/travis/ZidaanHabib/agro_kit.svg
-        :target: https://travis-ci.com/ZidaanHabib/agro_kit
-
-.. image:: https://readthedocs.org/projects/agro-kit/badge/?version=latest
-        :target: https://agro-kit.readthedocs.io/en/latest/?badge=latest
-        :alt: Documentation Status
-
-
-
-
-An API to facilitate interaction with an agriculture tech sensor kit.
+An API to facilitate interaction with an agriculture tech sensor kit. The sensor kit
+contains the following hardware modules in addition to the Raspberry Pi Zero W:
+* Quectel L70-M39 GPS
+* Adafruit MCP3008 ADC
+* Seeed Studio 10102008 Moisture Sensor
+* Adafruit TCS34725 Light Sensor
 
 
 * Free software: GNU General Public License v3
-* Documentation: https://agro-kit.readthedocs.io.
 
+Setup
+-------
+* Ensure SPI, I2C and UART are enabled on the Raspberry Pi. This can be done using the sudo raspi-config command in the Linux terminal.
+* Install required packages. These can be done as follows:
+  * pip3 install Adafruit_GPIO  Adafruit_MCP3008 Adafruit-Blinka
+  * pip3 install file-read-backwards requests pynmea2 adafruit-circuitpython-tcs34725
+  * pip3 install RPi.GPIO
 
 Features
 --------
 
-* TODO
+The library includes 4 main classes: MoistureSensor, light_sensor, GPS and AgroKit.
+The breakdown of the methods in these are explained below:
+
+MoistureSensor
+===============
+This class provides methods that relate to reading and using the moisture sensor.
+
+
+light_sensor
+=============
+
+
 
 Credits
 -------
@@ -35,3 +44,5 @@ This package was created with Cookiecutter_ and the `audreyr/cookiecutter-pypack
 
 .. _Cookiecutter: https://github.com/audreyr/cookiecutter
 .. _`audreyr/cookiecutter-pypackage`: https://github.com/audreyr/cookiecutter-pypackage
+
+The pynmea2 python library was used for GPS parsing of NMEA 0183 messages.

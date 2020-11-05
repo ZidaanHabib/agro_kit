@@ -17,7 +17,7 @@ setup_requirements = ['pytest-runner', ]
 test_requirements = ['pytest>=3', ]
 
 setup(
-    author="Zidaan Habib",
+    author="Zidaan Habib, Fraser Montandon",
     author_email='hbbzid001@myuct.ac.za',
     python_requires='>=3.5',
     classifiers=[
@@ -34,20 +34,28 @@ setup(
     description="An API to facilitate interaction with an agriculture tech sensor kit.",
     entry_points={
         'console_scripts': [
-            'agro_kit=agro_kit.cli:main',
+            'agro_kit=agro_kit.__main__:main',
         ],
     },
-    install_requires=requirements,
+    install_requires=["Adafruit_GPIO",
+        "Adafruit_MCP3008",
+        "file-read-backwards",
+        "requests",
+        "pynmea2", "adafruit-circuitpython-tcs34725",
+        "RPi.GPIO",
+        "Adafruit-Blinka"
+        ],
     license="GNU General Public License v3",
     long_description=readme + '\n\n' + history,
     include_package_data=True,
     keywords='agro_kit',
     name='agro_kit',
-    packages=find_packages(include=['agro_kit', 'agro_kit.*']),
+    #packages=find_packages(include=['agro_kit', 'agro_kit.*']),
+    packages=["agro_kit", "moisture_sensor", "light_sensor", "gps"]
     setup_requires=setup_requirements,
     test_suite='tests',
-    tests_require=test_requirements,
+    tests_require=["pytest"],
     url='https://github.com/ZidaanHabib/agro_kit',
-    version='0.1.0',
+    version='1.0.0',
     zip_safe=False,
 )
