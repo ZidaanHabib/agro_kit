@@ -3,35 +3,44 @@
 """Tests for `agro_kit` package."""
 
 import pytest
+from agro_kit.agro_kit import AgroKit
+import pymnea2 as nmea
 
-from click.testing import CliRunner
+myAG = AgroKit()  #initialise AgroKit object
+gll = "$GPGLL,4916.45,N,12311.12,W,225444,A,*1D"
 
-from agro_kit import agro_kit
-from agro_kit import cli
+def testRMC():
+    x = myAG.getRMC()
+    assert x.__class__.__name__ == "RMC"
 
+def testGGA():
+    x = myAG.geGGA()
+    assert x.__class__.__name__ == "GGA"
 
-@pytest.fixture
-def response():
-    """Sample pytest fixture.
+def testGLL():
+    x = myAG.getGLL()
+    assert x.__class__.__name__ == "GLL"
 
-    See more at: http://doc.pytest.org/en/latest/fixture.html
-    """
-    # import requests
-    # return requests.get('https://github.com/audreyr/cookiecutter-pypackage')
+def testGSV():
+    x = myAG.getGSV()
+    assert x.__class__.__name__ == "GSV"
 
+def testGSA():
+    x = myAG.getGSA()
+    assert x.__class__.__name__ == "GSA"
 
-def test_content(response):
-    """Sample pytest test function with the pytest fixture as an argument."""
-    # from bs4 import BeautifulSoup
-    # assert 'GitHub' in BeautifulSoup(response.content).title.string
+def testVTG():
+    x = myAG.getVTG()
+    assert x.__class__.__name__ == "VTG"
 
+def testGetLongLat():
+    nmea_obj = nmea.parse(gll)
+    res = myAG.GPS.getLongLat()
+    assert res == "49.274166666666666,N,-123.18533333333333,W"
 
-def test_command_line_interface():
-    """Test the CLI."""
-    runner = CliRunner()
-    result = runner.invoke(cli.main)
-    assert result.exit_code == 0
-    assert 'agro_kit.cli.main' in result.output
-    help_result = runner.invoke(cli.main, ['--help'])
-    assert help_result.exit_code == 0
-    assert '--help  Show this message and exit.' in help_result.output
+def testLoadProfile():
+    myAG.loadProfile("pytest")
+    assert myAG.MIN_MOISTURE == 0
+    assert myAG.MAX_MOISTURE == 10
+    assert myAG.MIN_LUX == 20
+    assert myAG.MAX_LUX == 30

@@ -43,7 +43,6 @@ class AgroKit:
             print(e)
             light = 100
             self.LS.powerDown(17)
-        #lux = 0
         output = str_datetime + "\tMoisture: " + str(moisture) + "\tLux: " + str(light) + "\tLocation:" + loc + "\tAltitude: " + str(alt) +"\n"
         print(output)
         return Reading(moisture,light, RMC_msg)
@@ -142,7 +141,7 @@ class AgroKit:
 
 
     @classmethod
-    def createProfile(name, minMoisture, maxMoisture, minLux, maxLux):
+    def createProfile(cls, name, minMoisture, maxMoisture, minLux, maxLux):
         """ Method to create a custom sensor profile with moisture and lux ranges
 
         arguments:
@@ -189,6 +188,4 @@ class Reading:
 if __name__ == "__main__":
     myAG = AgroKit()
     myAG.loadProfile("test")
-    lux = myAG.LS.singleReadLux()
-    #myAG.logData(myAG.GPS.getRMC(), myAG.GPS.getGGA(), myAG.GPS.getGLL(), myAG.MS.singleRead(), lux)
-    myAG.last24Hrs('log.txt')
+    AgroKit.createProfile("pytest", 0, 10, 20, 30)
