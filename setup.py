@@ -2,7 +2,7 @@
 
 """The setup script."""
 
-from setuptools import setup, find_packages
+from setuptools import setup
 
 with open('README.rst') as readme_file:
     readme = readme_file.read()
@@ -41,7 +41,7 @@ setup(
         "Adafruit_MCP3008",
         "file-read-backwards",
         "requests",
-        "pynmea2", 
+        "pynmea2",
         "adafruit-circuitpython-tcs34725",
         "RPi.GPIO",
         "Adafruit-Blinka"
