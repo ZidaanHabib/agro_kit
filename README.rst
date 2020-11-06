@@ -11,7 +11,8 @@ contains the following hardware modules in addition to the Raspberry Pi Zero W:
 * Seeed Studio 10102008 Moisture Sensor
 * Adafruit TCS34725 Light Sensor
 
-
+Licensing
+==========
 * Free software: GNU General Public License v3
 
 Features
@@ -19,7 +20,7 @@ Features
 
 * Sensor reading
 
-  * GPS 
+  * GPS
   * Moisture
   * Lux
 * Creating sensor profiles
@@ -34,6 +35,7 @@ Setup
   * pip3 install Adafruit_GPIO  Adafruit_MCP3008 Adafruit-Blinka
   * pip3 install file-read-backwards requests pynmea2
   * pip3 install RPi.GPIO adafruit-circuitpython-tcs34725
+  * pip3 install agro_kit
 
 Hardware Configuration
 =======================

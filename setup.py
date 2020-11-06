@@ -41,7 +41,8 @@ setup(
         "Adafruit_MCP3008",
         "file-read-backwards",
         "requests",
-        "pynmea2", "adafruit-circuitpython-tcs34725",
+        "pynmea2", 
+        "adafruit-circuitpython-tcs34725",
         "RPi.GPIO",
         "Adafruit-Blinka"
         ],
@@ -51,8 +52,8 @@ setup(
     keywords='agro_kit',
     name='agro_kit',
     #packages=find_packages(include=['agro_kit', 'agro_kit.*']),
-    packages=["agro_kit", "moisture_sensor", "light_sensor", "gps"]
-    setup_requires=setup_requirements,
+    packages=["agro_kit", "moisture_sensor", "light_sensor", "gps"],
+    #setup_requires=setup_requirements,
     test_suite='tests',
     tests_require=["pytest"],
     url='https://github.com/ZidaanHabib/agro_kit',

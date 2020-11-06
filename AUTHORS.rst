@@ -6,6 +6,7 @@ Development Lead
 ----------------
 
 * Zidaan Habib <hbbzid001@myuct.ac.za>
+* Fraser Montandon <mntfra006@myuct.ac.za>
 
 Contributors
 ------------
