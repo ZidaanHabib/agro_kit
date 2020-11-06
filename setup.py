@@ -2,6 +2,7 @@
 
 """The setup script."""
 
+import pathlib
 from setuptools import setup
 
 with open('README.rst') as readme_file:
@@ -12,6 +13,9 @@ with open('HISTORY.rst') as history_file:
 
 
 test_requirements = ['pytest>=3', ]
+
+HERE = pathlib.Path(__file__).parent
+README = (HERE/"README.rst").read_text()
 
 setup(
     author="Zidaan Habib, Fraser Montandon",
@@ -44,7 +48,8 @@ setup(
         "Adafruit-Blinka"
         ],
     license="GNU General Public License v3",
-    long_description=readme + '\n\n' + history,
+    long_description=README,
+    long_description_content_type="text/x-rst",
     include_package_data=True,
     keywords='agro_kit',
     name='agro_kit',
