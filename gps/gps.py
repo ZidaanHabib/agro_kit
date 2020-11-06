@@ -271,16 +271,4 @@ class GPS():
 
 #used for testing
 if __name__ == "__main__":
-    myGPS = GPS()
-    with open("../.gmaps_key", "r") as f:
-        API_KEY = f.readline().strip()
-        f.close()
-    GPS.setAPIKey(API_KEY)
-    dst_lat, dst_long = -26.146446, 28.041632
-    obj = myGPS.getGLL()
-    print(myGPS.getLongLat(obj))
-    #myGPS.ser.write(b"$PMTK101*32\r\n")
-    #print(myGPS.getLongLat())
-    #myGPS.ser.write("$PQFLP,R*25\r\n".encode())
-    #myGPS.continuousRead()
-    #myGPS.enableURC(0,1 )
+    pass

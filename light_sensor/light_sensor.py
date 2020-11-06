@@ -114,3 +114,7 @@ class light_sensor:
         """Read light sensor RGB values, format and print."""
         self.powerUp(self.pwr_pin)
         print('Colour: (Red {0}, Green {1}, Blue {2})'.format(*self.light_sensor_config.color_rgb_bytes))
+
+
+if __name__ == "__main__":
+    pass

@@ -30,8 +30,6 @@ class MoistureSensor:
         self.adcChannel = adcChannel
         self.pwr_pin = pwr_pin
         self.dly = 0.1
-        #self.MAX_READING = 1
-        #self.MIN_READING = 0
         GPIO.setwarnings(False)
         GPIO.setmode(GPIO.BCM) # use broadcom pin numbering
         GPIO.setup(self.pwr_pin, GPIO.OUT) # set pin to output mode
@@ -66,16 +64,15 @@ class MoistureSensor:
         self.datapin = pin #set data pin to be something else if another microcontroller is used with a serial connection
 
     def init_SPI(self):
-        #Adafruit_GPIO allows software or hardware SPI. We are using hardware
-        self.SPI_TYPE = 'HW'
-        self.SPI_PORT = 0 # using CE0 port on pi
+        """ Method to initialise SPI communication with ADC """
+        self.SPI_TYPE = 'HW'    #Adafruit_GPIO allows software or hardware SPI. We are using hardware
+        self.SPI_PORT = 0       #using CE0 port on pi
         self.SPI_DEV = 0
-
         mcp = Adafruit_MCP3008.MCP3008(spi=SPI.SpiDev(SPI_PORT, SPI_DEV))
 
 
-    #user must submerge sensor in water
-    def calibrate_max(self):
+
+    def calibrate_max(self):    #user must submerge sensor in water
         """ Method to set the max moisture value to represent 100% """
         #self.MAX_READING = mcp.read_adc(self.adcChannel)
         max = self.mcp.read_adc(self.adcChannel)
@@ -89,8 +86,8 @@ class MoistureSensor:
             except:
                 print("Something went wrong")
         f.close()
-    #user must submerge sensor in water
-    def calibrate_min(self):
+
+    def calibrate_min(self):     #user must submerge sensor in water
         """ Method to set the min moisture value to represent 100% """
         #self.MIN_READING = mcp.read_adc(self.adcChannel)
         min = self.mcp.read_adc(self.adcChannel)
@@ -142,9 +139,4 @@ class MoistureSensor:
                 print("Something went wrong")
 
 if __name__ == "__main__":
-    #testing:
-    moisture_sensor = MoistureSensor(21, 0, 7, 18)
-    #moisture_sensor.calibrate_min()
-    reading = moisture_sensor.singleRead()
-    print(reading) # used for testing
-    #MoistureSensor.createRange(10, 20, 'test')
+    pass

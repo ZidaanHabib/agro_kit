@@ -187,6 +187,4 @@ class Reading:
 
 
 if __name__ == "__main__":
-    myAG = AgroKit()
-    myAG.loadProfile("test")
-    myAG.LS.singleReadLux()
+    pass
