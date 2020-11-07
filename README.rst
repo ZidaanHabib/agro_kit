@@ -37,7 +37,8 @@ Setup
   * pip3 install RPi.GPIO adafruit-circuitpython-tcs34725
   * pip3 install agro-kit
 
-Note that this API can has to be used on a Raspberry Pi. 
+Note that this API can has to be used on a Raspberry Pi.
+
 Hardware Configuration
 =======================
 

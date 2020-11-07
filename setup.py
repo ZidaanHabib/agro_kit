@@ -59,6 +59,6 @@ setup(
     test_suite='tests',
     tests_require=["pytest"],
     url='https://github.com/ZidaanHabib/agro_kit',
-    version='1.0.0',
+    version='1.0.2',
     zip_safe=False,
 )
